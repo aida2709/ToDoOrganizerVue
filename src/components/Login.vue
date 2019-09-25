@@ -15,6 +15,7 @@
             v-model="email"
             placeholder="Email"
             name="emailInput"
+            v-bind:class="{ 'has-error': submitted && !$v.email.required }"
           />
         </div>
 
@@ -26,9 +27,13 @@
             v-model="password"
             placeholder="Password"
             name="passwordInput"
+            v-bind:class="{ 'has-error': submitted && !$v.password.required }"
           />
 
-          <span @click="toggle" class="fa fa-lg toggle-password" id="togglePassword"></span>
+          <span @click="toggle" 
+          class="fa fa-lg toggle-password" 
+          v-bind:class="{'fa-eye':!showPassword, 'fa-eye-slash':showPassword}"
+          ></span>
         </div>
 
         <div class="row login-form-section">
@@ -53,6 +58,8 @@
 </template>
 
 <script>
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+
 export default {
   name: "Login",
   data() {
@@ -61,15 +68,34 @@ export default {
       isError: false,
       email: "",
       password: "",
-      rememberMe: false
+      rememberMe: false,
+      submitted: false,
+      showPassword:false
     };
+  },
+  validations: {
+    email: { required, email },
+    password: { required }
   },
   methods: {
     toggle() {
-      console.log("toggle");
+      this.showPassword=!this.showPassword;
+      
+      if(this.showPassword){
+          document.getElementById('passwordId').setAttribute('type','text');
+      }
+      else{
+          document.getElementById('passwordId').setAttribute('type','password');
+      }
     },
     onSignInClicked(e) {
       e.preventDefault();
+      this.submitted = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+
       console.log(this.email);
       console.log(this.password);
       console.log(this.rememberMe);
@@ -251,7 +277,7 @@ input {
 }
 
 .has-error {
-  border: 1px solid red !important;
+  border: 1px solid #ef8282 !important;
 }
 
 .label-container {
