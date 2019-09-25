@@ -30,9 +30,10 @@
             v-bind:class="{ 'has-error': submitted && !$v.password.required }"
           />
 
-          <span @click="toggle" 
-          class="fa fa-lg toggle-password" 
-          v-bind:class="{'fa-eye':!showPassword, 'fa-eye-slash':showPassword}"
+          <span
+            @click="toggle"
+            class="fa fa-lg toggle-password"
+            v-bind:class="{'fa-eye':!showPassword, 'fa-eye-slash':showPassword}"
           ></span>
         </div>
 
@@ -58,7 +59,8 @@
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
+import AuthService from "../services/AuthService";
 
 export default {
   name: "Login",
@@ -70,22 +72,21 @@ export default {
       password: "",
       rememberMe: false,
       submitted: false,
-      showPassword:false
+      showPassword: false
     };
   },
   validations: {
-    email: { required, email },
+    email: { required },
     password: { required }
   },
   methods: {
     toggle() {
-      this.showPassword=!this.showPassword;
-      
-      if(this.showPassword){
-          document.getElementById('passwordId').setAttribute('type','text');
-      }
-      else{
-          document.getElementById('passwordId').setAttribute('type','password');
+      this.showPassword = !this.showPassword;
+
+      if (this.showPassword) {
+        document.getElementById("passwordId").setAttribute("type", "text");
+      } else {
+        document.getElementById("passwordId").setAttribute("type", "password");
       }
     },
     onSignInClicked(e) {
@@ -96,9 +97,18 @@ export default {
         return;
       }
 
-      console.log(this.email);
-      console.log(this.password);
-      console.log(this.rememberMe);
+      let result = AuthService.login(
+        this.email,
+        this.password,
+        this.rememberMe
+      );
+
+      if (result) {
+        this.isError = false;
+      } else {
+        this.isError = true;
+        this.errorMessage = "User data not valid.";
+      }
     }
   }
 };
