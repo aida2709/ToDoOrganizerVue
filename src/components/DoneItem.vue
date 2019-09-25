@@ -1,201 +1,30 @@
 <template>
   <div>
-    <Toolbar></Toolbar>
-    <div class="global-container">
-      <div>
-        <p class="title">Manage your to do list</p>
-        <p class="subtitle">Click on checkbox or drag and drop to done</p>
-      </div>
+    <img v-if="item.Image" v-bind:src="item.Image" class="todo-item-image" />
 
-      <div class="col left">
-        <div class="div-options">
-          <h4>To-do list</h4>
-          <button @click="onAddToDoItemClicked" class="add-btn header-btn"></button>
-        </div>
+    <div class="card">
+      <label class="label-container">
+        <input
+          type="checkbox"
+          name="title"
+          v-bind:value="item.IsFinished"
+          v-model="item.IsFinished"
+          v-on:change="$emit('status-changed',item)"
+        />
+        <span class="checkmark checkmark-checked"></span>
+      </label>
 
-        <hr />
+      <p style="display: inline;" class="done-title">{{item.Title}}</p>
 
-        <div class="card-container">
-          <div class="card" v-if="newToDo!=null">
-            <label class="label-container">
-              <input
-                type="checkbox"
-                name="IsFinished"
-                v-bind:value="newToDo.IsFinished"
-                v-model="newToDo.IsFinished"
-                id="newtodo-checkbox"
-              />
-              <span
-                class="checkmark"
-                v-bind:class="{'checkmark-unchecked':!newToDo.IsFinished, 'checkmark-checked':newToDo.IsFinished}"
-              ></span>
-            </label>
-
-            <input
-              id="newtodo-title"
-              autofocus
-              type="text"
-              v-model="newToDo.Title"
-              v-on:keyup.enter="addToDo"
-              name="Title"
-            />
-          </div>
-
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            id="imgupload"
-            style="display:none"
-            @change="onUploadImageClicked($event)"
-          />
-
-          <div class="main-card" v-bind:key="item.Id" v-for="item in todoList">
-            <TodoItem
-              v-bind:item="item"
-              v-on:edit-todo="editToDo"
-              v-on:upload-image="uploadImage"
-              v-on:delete-todo="onDeleteToDoItemClicked"
-              v-on:status-changed="onToDoItemStatusChanged"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="col right">
-        <div class="div-options">
-          <h4>Done</h4>
-          <button @click="onDeleteAllDoneItemsClicked" class="delete-btn header-btn"></button>
-        </div>
-
-        <hr />
-
-        <div class="card-container">
-          <div class="main-card" v-bind:key="item.Id" v-for="item in doneList">
-            <DoneItem 
-            v-bind:item="item"
-            v-on:status-changed="onDoneItemStatusChanged"
-            v-on:delete-item="onDeleteDoneItemClicked"
-            />
-          </div>
-        </div>
-      </div>
+      <button @click="$emit('delete-item',item)" class="item-btn delete-item"></button>
     </div>
   </div>
 </template>
 
 <script>
-import Toolbar from "./Toolbar";
-import TodoService from "../services/ToDoService";
-import TodoItem from "./TodoItem";
-import DoneItem from "./DoneItem";
-
-
 export default {
-  name: "Todo",
-  components: { Toolbar, TodoItem, DoneItem },
-  data() {
-    return {
-      todoList: [],
-      doneList: [],
-      newToDo: null,
-      selectedItemId: null,
-      selectedItemForImageUpload: null,
-      image:''
-    };
-  },
-  methods: {
-    addToDo() {
-      if (
-        this.newToDo == null ||
-        this.newToDo.Title == undefined ||
-        this.newToDo.Title.length == 0 ||
-        this.newToDo.Title.trim() == ""
-      ) {
-        this.newToDo = null;
-        return;
-      }
-
-      if (this.newToDo.IsFinished == true) {
-        TodoService.addDone(this.newToDo);
-        this.doneList = TodoService.getDoneList();
-      } else {
-        TodoService.addToDo(this.newToDo);
-        this.todoList = TodoService.getTodoList();
-      }
-
-      this.newToDo = null;
-    },
-    onAddToDoItemClicked() {
-      this.newToDo = {
-        Title: "",
-        IsFinished: false
-      };
-    },
-    onUploadImageClicked(event) {
-      if (this.selectedItemForImageUpload == null) {
-        return;
-      }
-
-      let reader = new FileReader();
-      let file = event.target.files[0];
-
-      if (event.target.files && event.target.files[0]) {
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          this.image = reader.result;
-          this.selectedItemForImageUpload.Image = this.image.toString();
-          TodoService.editToDoItem(this.selectedItemForImageUpload);
-          this.todoList = TodoService.getTodoList();
-        };
-
-      }
-    },
-    onToDoItemStatusChanged(item) {
-      if (TodoService.removeToDoItem(item)) {
-        TodoService.addDone(item);
-        this.todoList = TodoService.getTodoList();
-        this.doneList = TodoService.getDoneList();
-      }
-    },
-    editToDo(item) {
-      TodoService.editToDoItem(item);
-      this.todoList = TodoService.getTodoList();
-      this.getToDoList();
-    },
-    uploadImage(item) {
-      this.selectedItemForImageUpload = item;
-      document.getElementById("imgupload").click();
-    },
-    onDeleteToDoItemClicked(item) {
-      if (TodoService.removeToDoItem(item)) {
-        this.todoList = TodoService.getTodoList();
-      }
-
-      this.selectedItemId = null;
-    },
-    onDeleteAllDoneItemsClicked() {
-      TodoService.removeAllDoneItems();
-      this.doneList = TodoService.getDoneList();
-    },
-    onDoneItemStatusChanged(item) {
-      if (TodoService.removeDoneItem(item)) {
-        TodoService.addToDo(item);
-        this.todoList = TodoService.getTodoList();
-        this.doneList = TodoService.getDoneList();
-      }
-    },
-    onDeleteDoneItemClicked(item) {
-      if (TodoService.removeDoneItem(item)) {
-        this.doneList = TodoService.getDoneList();
-        this.getDoneList();
-      }
-    }
-  },
-  mounted: function() {
-    this.todoList = TodoService.getTodoList();
-    this.doneList = TodoService.getDoneList();
-  }
+  name: "DoneItem",
+  props: ["item"]
 };
 </script>
 

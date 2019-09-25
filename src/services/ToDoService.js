@@ -31,7 +31,7 @@ export default {
         let todoList = JSON.parse(localStorage.getItem('todoList'));
 
         if (!todoList) {
-            let todoList = [];
+            todoList = [];
         }
 
         todoList.push(toDoItem);
@@ -48,7 +48,7 @@ export default {
         let doneList = JSON.parse(localStorage.getItem('doneList'));
 
         if (!doneList) {
-            let doneList = [];
+             doneList = [];
         }
 
         doneList.push(toDoItem);
@@ -162,10 +162,10 @@ export default {
         if (!toDoItem.Id)//if item already has its id, do not update it
             toDoItem.Id = this.getNextId();
 
-        this.getTodoList();
+        let todoList=this.getTodoList();
 
         if (todoList == null || todoList == []) {
-            let todoList = [];
+             todoList = [];
             toDoItem.Position = 1;
             todoList.push(toDoItem);
         }
@@ -187,7 +187,7 @@ export default {
         if (!toDoItem.Id)//if item already has its id, do not update it
             toDoItem.Id = this.getNextId();
 
-        this.getDoneList();
+        let doneList=this.getDoneList();
 
         if (doneList == null || doneList == []) {
             doneList = [];
