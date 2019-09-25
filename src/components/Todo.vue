@@ -166,15 +166,73 @@ export default {
         IsFinished: false
       };
     },
-    onUploadImageClicked($event) {},
-    onToDoItemStatusChanged(item) {},
-    editToDo(item) {},
-    onShowDropDownClicked(item) {},
-    uploadImage(item) {},
-    onDeleteToDoItemClicked(item) {},
-    onDeleteAllDoneItemsClicked() {},
-    onDoneItemStatusChanged(item) {},
-    onDeleteDoneItemClicked(item) {}
+    onUploadImageClicked(event) {
+      if (this.selectedItemForImageUpload == null) {
+        this.showDropdown = false;
+        return;
+      }
+
+      let reader = new FileReader();
+      let file = event.target.files[0];
+
+      if (event.target.files && event.target.files[0]) {
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.image = reader.result;
+          this.selectedItemForImageUpload.Image = this.image.toString();
+          TodoService.editToDoItem(this.selectedItemForImageUpload);
+          this.todoList = TodoService.getTodoList();
+        };
+
+        this.showDropdown = false;
+      }
+    },
+    onToDoItemStatusChanged(item) {
+      if (TodoService.removeToDoItem(item)) {
+        TodoService.addDone(item);
+        this.todoList = TodoService.getTodoList();
+        this.doneList = TodoService.getDoneList();
+      }
+    },
+    editToDo(item) {
+      TodoService.editToDoItem(item);
+      this.todoList = TodoService.getTodoList();
+      this.getToDoList();
+    },
+    onShowDropDownClicked(item) {
+      this.showDropdown = !this.showDropdown;
+      this.selectedItemId = item.Id;
+    },
+    uploadImage(item) {
+      this.selectedItemForImageUpload = item;
+      document.getElementById("imgupload").click();
+    },
+    onDeleteToDoItemClicked(item) {
+      if (TodoService.removeToDoItem(item)) {
+        this.todoList = TodoService.getTodoList();
+      }
+
+      this.showDropdown = false;
+      this.selectedItemId = null;
+    },
+    onDeleteAllDoneItemsClicked() {
+      TodoService.removeAllDoneItems();
+      this.doneList = TodoService.getDoneList();
+    },
+    onDoneItemStatusChanged(item) {
+      if (TodoService.removeDoneItem(item)) {
+        TodoService.addToDo(item);
+        this.todoList = TodoService.getTodoList();
+        this.doneList = TodoService.getDoneList();
+      }
+    },
+    onDeleteDoneItemClicked(item) {
+      if (TodoService.removeDoneItem(item)) {
+        this.doneList = TodoService.getDoneList();
+        this.getDoneList();
+      }
+    }
   },
   mounted: function() {
     this.todoList = TodoService.getTodoList();
@@ -286,6 +344,7 @@ h4 {
 
 .card-container {
   margin-top: 20px;
+  text-align: left;
 }
 
 .main-card {
