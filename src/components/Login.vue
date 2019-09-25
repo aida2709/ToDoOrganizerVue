@@ -105,6 +105,7 @@ export default {
 
       if (result) {
         this.isError = false;
+        this.$router.push('todo');
       } else {
         this.isError = true;
         this.errorMessage = "User data not valid.";
