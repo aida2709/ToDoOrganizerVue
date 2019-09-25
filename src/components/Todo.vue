@@ -1,7 +1,5 @@
 <template>
   <div>
-    <toolbar></toolbar>
-
     <div class="global-container">
       <div>
         <p class="title">Manage your to do list</p>
@@ -17,16 +15,30 @@
         <hr />
 
         <div class="card-container">
-          <!-- <div class="card" *ngIf="newToDo!=null">
-                <label class="label-container">
-                    <input type="checkbox" name="IsFinished" [(ngModel)]="newToDo.IsFinished" name="IsFinished" id="newtodo-checkbox">
-                    <span class="checkmark"
-                        [ngClass]="{'checkmark-unchecked':newToDo.IsFinished != true,'checkmark-checked':newToDo.IsFinished == true}"></span>
-                </label>
+          <div class="card" v-if="newToDo!=null">
+            <label class="label-container">
+              <input
+                type="checkbox"
+                name="IsFinished"
+                v-bind:value="newToDo.IsFinished"
+                v-model="newToDo.IsFinished"
+                id="newtodo-checkbox"
+              />
+              <span
+                class="checkmark"
+                v-bind:class="{'checkmark-unchecked':!newToDo.IsFinished, 'checkmark-checked':newToDo.IsFinished}"
+              ></span>
+            </label>
 
-                <input id="newtodo-title" autofocus type="text" [(ngModel)]="newToDo.Title" (keyup.enter)="addToDo()" (focusout)="addToDo()" 
-                    name="Title">
-          </div>-->
+            <input
+              id="newtodo-title"
+              autofocus
+              type="text"
+              v-model="newToDo.Title"
+              v-on:keyup.enter="addToDo"
+              name="Title"
+            />
+          </div>
 
           <input
             type="file"
@@ -112,17 +124,48 @@
 </template>
 
 <script>
+import TodoService from "../services/ToDoService";
+
 export default {
   name: "Todo",
   data() {
     return {
       todoList: [],
       doneList: [],
-      showDropdown: false
+      showDropdown: false,
+      newToDo: null,
+      selectedItemId: null,
+      selectedItemForImageUpload: null
     };
   },
   methods: {
-    onAddToDoItemClicked() {},
+    addToDo() {
+      if (
+        this.newToDo == null ||
+        this.newToDo.Title == undefined ||
+        this.newToDo.Title.length == 0 ||
+        this.newToDo.Title.trim() == ""
+      ) {
+        this.newToDo = null;
+        return;
+      }
+
+      if (this.newToDo.IsFinished == true) {
+        TodoService.addDone(this.newToDo);
+        this.doneList = TodoService.getDoneList();
+      } else {
+        TodoService.addToDo(this.newToDo);
+        this.todoList = TodoService.getTodoList();
+      }
+
+      this.newToDo = null;
+    },
+    onAddToDoItemClicked() {
+      this.newToDo = {
+        Title: "",
+        IsFinished: false
+      };
+    },
     onUploadImageClicked($event) {},
     onToDoItemStatusChanged(item) {},
     editToDo(item) {},
@@ -132,6 +175,10 @@ export default {
     onDeleteAllDoneItemsClicked() {},
     onDoneItemStatusChanged(item) {},
     onDeleteDoneItemClicked(item) {}
+  },
+  mounted: function() {
+    this.todoList = TodoService.getTodoList();
+    this.doneList = TodoService.getDoneList();
   }
 };
 </script>

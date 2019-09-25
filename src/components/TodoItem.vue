@@ -7,7 +7,7 @@ export default {
     name:"TodoItem",
     props:["todoItem"],
     methods:{
-        
+
     }
 }
 </script>
