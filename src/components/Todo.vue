@@ -108,7 +108,6 @@ export default {
     return {
       todoList: [],
       doneList: [],
-      showDropdown: false,
       newToDo: null,
       selectedItemId: null,
       selectedItemForImageUpload: null,
@@ -184,7 +183,6 @@ export default {
         this.todoList = TodoService.getTodoList();
       }
 
-      this.showDropdown = false;
       this.selectedItemId = null;
     },
     onDeleteAllDoneItemsClicked() {
