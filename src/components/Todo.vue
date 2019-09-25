@@ -1,5 +1,6 @@
 <template>
   <div>
+      <Toolbar></Toolbar>
     <div class="global-container">
       <div>
         <p class="title">Manage your to do list</p>
@@ -124,10 +125,12 @@
 </template>
 
 <script>
+import Toolbar from './Toolbar'
 import TodoService from "../services/ToDoService";
 
 export default {
   name: "Todo",
+   components: {Toolbar},
   data() {
     return {
       todoList: [],
@@ -262,6 +265,7 @@ input:focus {
   margin-top: 40px;
   margin-bottom: 140px;
   height: 100vh;
+  text-align: left;
 }
 
 .title {
