@@ -2,7 +2,7 @@ export default {
 
     login(email, password, rememberMe) {
         if (email == "test@test.com" && password == "test") {
-            let user={
+            let user = {
                 Email: email,
                 Username: "Username",
                 RememberMe: rememberMe,
@@ -33,24 +33,19 @@ export default {
 
         if (data) {
             let user = JSON.parse(data);
-            if (user && user.RememberMe == true) {
-                return true;
-            }
-            return false;
+            return (user && user.RememberMe == true);
         }
         return false;
     },
 
     logout() {
-        localStorage.removeItem('loggedUser');
+        //localStorage.removeItem('loggedUser');
+        localStorage.clear();
     },
 
     getUsername() {
         let user = JSON.parse(localStorage.getItem('loggedUser'));
 
-        if (user)
-            return user.Username;
-
-        return '';
+        return user ? user.Username : '';
     }
 }

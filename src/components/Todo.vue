@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Toolbar></Toolbar>
+    <Toolbar></Toolbar>
     <div class="global-container">
       <div>
         <p class="title">Manage your to do list</p>
@@ -50,41 +50,13 @@
           />
 
           <div class="main-card" v-bind:key="item.Id" v-for="item in todoList">
-            <img v-if="item.Image" v-bind:src="item.Image" class="todo-item-image" />
-
-            <div class="card">
-              <label class="label-container">
-                <input
-                  type="checkbox"
-                  name="title"
-                  v-bind:value="item.IsFinished"
-                  v-model="item.IsFinished"
-                  @change="onToDoItemStatusChanged(item)"
-                />
-                <span class="checkmark checkmark-unchecked"></span>
-              </label>
-
-              <input
-                class="todo-title"
-                type="text"
-                v-model="item.Title"
-                v-on:keyup.enter="editToDo(item)"
-                name="Title"
-              />
-
-              <button @click="onShowDropDownClicked(item)" class="item-btn"></button>
-              <div class="dropdown-content" v-if="showDropdown && item.Id==selectedItemId">
-                <div class="dropdown-item">
-                  <img src="../assets/icons/image.png" class="dropdown-img" />
-                  <a @click="uploadImage(item)" class="dropdown-label">Image</a>
-                </div>
-
-                <div class="dropdown-item">
-                  <img src="../assets/icons/delete-item.png" class="dropdown-img" />
-                  <a @click="onDeleteToDoItemClicked(item)" class="dropdown-label">Delete</a>
-                </div>
-              </div>
-            </div>
+            <TodoItem
+              v-bind:item="item"
+              v-on:edit-todo="editToDo"
+              v-on:upload-image="uploadImage"
+              v-on:delete-todo="onDeleteToDoItemClicked"
+              v-on:status-changed="onToDoItemStatusChanged"
+            />
           </div>
         </div>
       </div>
@@ -125,12 +97,13 @@
 </template>
 
 <script>
-import Toolbar from './Toolbar'
+import Toolbar from "./Toolbar";
 import TodoService from "../services/ToDoService";
+import TodoItem from "./TodoItem";
 
 export default {
   name: "Todo",
-   components: {Toolbar},
+  components: { Toolbar, TodoItem },
   data() {
     return {
       todoList: [],
@@ -138,7 +111,8 @@ export default {
       showDropdown: false,
       newToDo: null,
       selectedItemId: null,
-      selectedItemForImageUpload: null
+      selectedItemForImageUpload: null,
+      image:''
     };
   },
   methods: {
@@ -171,7 +145,6 @@ export default {
     },
     onUploadImageClicked(event) {
       if (this.selectedItemForImageUpload == null) {
-        this.showDropdown = false;
         return;
       }
 
@@ -188,7 +161,6 @@ export default {
           this.todoList = TodoService.getTodoList();
         };
 
-        this.showDropdown = false;
       }
     },
     onToDoItemStatusChanged(item) {
@@ -202,10 +174,6 @@ export default {
       TodoService.editToDoItem(item);
       this.todoList = TodoService.getTodoList();
       this.getToDoList();
-    },
-    onShowDropDownClicked(item) {
-      this.showDropdown = !this.showDropdown;
-      this.selectedItemId = item.Id;
     },
     uploadImage(item) {
       this.selectedItemForImageUpload = item;
