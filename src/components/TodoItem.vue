@@ -10,7 +10,6 @@
           v-bind:value="item.IsFinished"
           v-model="item.IsFinished"
           v-on:change="$emit('status-changed',item)"
-          
         />
         <span class="checkmark checkmark-unchecked"></span>
       </label>
@@ -27,7 +26,10 @@
       <div class="dropdown-content" v-if="showDropdown && item.Id==selectedItemId">
         <div class="dropdown-item">
           <img src="../assets/icons/image.png" class="dropdown-img" />
-          <a @click="$emit('upload-image', item); onShowDropDownClicked(item);" class="dropdown-label">Image</a>
+          <a
+            @click="$emit('upload-image', item); onShowDropDownClicked(item);"
+            class="dropdown-label"
+          >Image</a>
         </div>
 
         <div class="dropdown-item">
