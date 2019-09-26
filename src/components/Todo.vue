@@ -106,16 +106,15 @@ export default {
   methods: {
     addToDo() {
       if (
-        this.newToDo == null ||
-        this.newToDo.Title == undefined ||
-        this.newToDo.Title.length == 0 ||
+        !this.newToDo ||
+        !this.newToDo.Title ||
         this.newToDo.Title.trim() == ""
       ) {
         this.newToDo = null;
         return;
       }
 
-      if (this.newToDo.IsFinished == true) {
+      if (this.newToDo.IsFinished) {
         TodoService.addDone(this.newToDo);
         this.doneList = TodoService.getDoneList();
       } else {
@@ -132,7 +131,7 @@ export default {
       };
     },
     onUploadImageClicked(event) {
-      if (this.selectedItemForImageUpload == null) {
+      if (!this.selectedItemForImageUpload) {
         return;
       }
 

@@ -60,10 +60,11 @@ export default {
 
         if (todoList) {
             let i = todoList.findIndex(x => x.Id === toDoItem.Id);
-            todoList.splice(i, 1);
 
             if (i < 0)
                 return false;
+
+            todoList.splice(i, 1);
 
             localStorage.setItem('todoList', JSON.stringify(todoList));
             return true;
@@ -164,7 +165,7 @@ export default {
 
         let todoList = this.getTodoList();
 
-        if (todoList == null || todoList == []) {
+        if (!todoList || todoList == []) {
             todoList = [];
             toDoItem.Position = 1;
             todoList.push(toDoItem);
@@ -189,7 +190,7 @@ export default {
 
         let doneList = this.getDoneList();
 
-        if (doneList == null || doneList == []) {
+        if (!doneList || doneList == []) {
             doneList = [];
             toDoItem.Position = 1;
             doneList.push(toDoItem);

@@ -20,10 +20,7 @@ export default {
 
         if (data) {
             let user = JSON.parse(data);
-            if (user) {
-                return true;
-            }
-            return false;
+            return user;
         }
         return false;
     },
@@ -39,8 +36,8 @@ export default {
     },
 
     logout() {
-        //localStorage.removeItem('loggedUser');
-        localStorage.clear();
+        localStorage.removeItem('loggedUser');
+        //localStorage.clear();
     },
 
     getUsername() {
