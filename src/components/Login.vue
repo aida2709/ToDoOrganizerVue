@@ -46,7 +46,11 @@
             </label>
           </div>
           <div class="col m--align-right m-login__form-right">
-            <a href="javascript:;" id="m_login_forget_password" class="m-link">{{ $t('_FORGET_PASSWORD') }}</a>
+            <a
+              href="javascript:;"
+              id="m_login_forget_password"
+              class="m-link"
+            >{{ $t('_FORGET_PASSWORD') }}</a>
           </div>
         </div>
 
@@ -104,7 +108,7 @@ export default {
 
       if (result) {
         this.isError = false;
-        this.$router.push('todo');
+        this.$router.push("todo");
       } else {
         this.isError = true;
       }

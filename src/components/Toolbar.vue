@@ -35,16 +35,14 @@ export default {
     },
     onLogoutClicked() {
       AuthService.logout();
-      this.$router.push('login');
+      this.$router.push("login");
     }
   },
   mounted: function() {
-
     if (AuthService.isLogged() == false) {
-        this.$router.push('login');
-    } 
-    else{
-    this.username = AuthService.getUsername();
+      this.$router.push("login");
+    } else {
+      this.username = AuthService.getUsername();
     }
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Toolbar></Toolbar>
-    
+
     <div class="global-container">
       <div>
         <p class="title">{{ $t('_MANAGE_TO_DO_LIST') }}</p>
@@ -72,10 +72,10 @@
 
         <div class="card-container">
           <div class="main-card" v-bind:key="item.Id" v-for="item in doneList">
-            <DoneItem 
-            v-bind:item="item"
-            v-on:status-changed="onDoneItemStatusChanged"
-            v-on:delete-item="onDeleteDoneItemClicked"
+            <DoneItem
+              v-bind:item="item"
+              v-on:status-changed="onDoneItemStatusChanged"
+              v-on:delete-item="onDeleteDoneItemClicked"
             />
           </div>
         </div>
@@ -90,7 +90,6 @@ import TodoService from "../services/ToDoService";
 import TodoItem from "./TodoItem";
 import DoneItem from "./DoneItem";
 
-
 export default {
   name: "Todo",
   components: { Toolbar, TodoItem, DoneItem },
@@ -101,7 +100,7 @@ export default {
       newToDo: null,
       selectedItemId: null,
       selectedItemForImageUpload: null,
-      image:''
+      image: ""
     };
   },
   methods: {
@@ -148,7 +147,6 @@ export default {
           TodoService.editToDoItem(this.selectedItemForImageUpload);
           this.todoList = TodoService.getTodoList();
         };
-
       }
     },
     onToDoItemStatusChanged(item) {
