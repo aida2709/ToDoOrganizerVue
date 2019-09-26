@@ -2,7 +2,7 @@
   <div class="container">
     <form class="login-form">
       <div class="wrapper">
-        <div v-if="isError" class="error">{{errorMessage}}</div>
+        <div v-if="isError" class="error">{{ $t('_USER_DATA_NOT_VALID') }}</div>
 
         <div>
           <img src="../assets/icons/logo.png" class="logo-img" />
@@ -13,7 +13,7 @@
             type="text"
             class="form-input"
             v-model="email"
-            placeholder="Email"
+            v-bind:placeholder="$t('_EMAIL')"
             name="emailInput"
             v-bind:class="{ 'has-error': submitted && !$v.email.required }"
           />
@@ -25,7 +25,7 @@
             id="passwordId"
             class="form-input"
             v-model="password"
-            placeholder="Password"
+            v-bind:placeholder="$t('_PASSWORD')"
             name="passwordInput"
             v-bind:class="{ 'has-error': submitted && !$v.password.required }"
           />
@@ -40,18 +40,18 @@
         <div class="row login-form-section">
           <div class="col m--align-left m-login__form-left">
             <label class="label-container">
-              Remember me
+              {{ $t('_REMEMBER_ME') }}
               <input type="checkbox" name="rememberMe" v-model="rememberMe" />
               <span class="checkmark"></span>
             </label>
           </div>
           <div class="col m--align-right m-login__form-right">
-            <a href="javascript:;" id="m_login_forget_password" class="m-link">Forget your password?</a>
+            <a href="javascript:;" id="m_login_forget_password" class="m-link">{{ $t('_FORGET_PASSWORD') }}</a>
           </div>
         </div>
 
         <div>
-          <button class="signin-button" @click="onSignInClicked">Sign in</button>
+          <button class="signin-button" @click="onSignInClicked">{{ $t('_SIGN_IN') }}</button>
         </div>
       </div>
     </form>
@@ -66,7 +66,6 @@ export default {
   name: "Login",
   data() {
     return {
-      errorMessage: "",
       isError: false,
       email: "",
       password: "",
@@ -108,7 +107,6 @@ export default {
         this.$router.push('todo');
       } else {
         this.isError = true;
-        this.errorMessage = "User data not valid.";
       }
     }
   }

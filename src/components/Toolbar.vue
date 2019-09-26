@@ -10,7 +10,7 @@
 
           <div class="dropdown-content" v-if="showDropdown">
             <img src="../assets/icons/logout.png" class="logoutImg" />
-            <a @click="onLogoutClicked" class="logout">Log out</a>
+            <a @click="onLogoutClicked" class="logout">{{ $t('_LOGOUT') }}</a>
           </div>
         </li>
       </ul>

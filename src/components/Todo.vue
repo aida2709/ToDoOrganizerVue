@@ -1,15 +1,16 @@
 <template>
   <div>
     <Toolbar></Toolbar>
+    
     <div class="global-container">
       <div>
-        <p class="title">Manage your to do list</p>
-        <p class="subtitle">Click on checkbox or drag and drop to done</p>
+        <p class="title">{{ $t('_MANAGE_TO_DO_LIST') }}</p>
+        <p class="subtitle">{{ $t('_SUBTITLE_CLICK_ON_CHECKBOX') }}</p>
       </div>
 
       <div class="col left">
         <div class="div-options">
-          <h4>To-do list</h4>
+          <h4>{{ $t('_TODO_LIST') }}</h4>
           <button @click="onAddToDoItemClicked" class="add-btn header-btn"></button>
         </div>
 
@@ -63,7 +64,7 @@
 
       <div class="col right">
         <div class="div-options">
-          <h4>Done</h4>
+          <h4>{{ $t('_DONE_LIST') }}</h4>
           <button @click="onDeleteAllDoneItemsClicked" class="delete-btn header-btn"></button>
         </div>
 

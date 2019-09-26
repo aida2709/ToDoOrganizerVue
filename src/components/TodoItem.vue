@@ -29,12 +29,12 @@
           <a
             @click="$emit('upload-image', item); onShowDropDownClicked(item);"
             class="dropdown-label"
-          >Image</a>
+          >{{ $t('_IMAGE') }}</a>
         </div>
 
         <div class="dropdown-item">
           <img src="../assets/icons/delete-item.png" class="dropdown-img" />
-          <a @click="$emit('delete-todo', item)" class="dropdown-label">Delete</a>
+          <a @click="$emit('delete-todo', item)" class="dropdown-label">{{ $t('_DELETE') }}</a>
         </div>
       </div>
     </div>
