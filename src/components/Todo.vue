@@ -11,13 +11,13 @@
       <div class="col left">
         <div class="div-options">
           <h4>{{ $t('_TODO_LIST') }}</h4>
-          <button @click="onAddToDoItemClicked" class="add-btn header-btn"></button>
+            <i class="material-icons add-btn header-btn" @click="onAddToDoItemClicked">add</i>
         </div>
 
         <hr />
 
         <div class="card-container">
-          <div class="card" v-if="newToDo!=null">
+          <div class="card" v-if="newToDo">
             <label class="label-container">
               <input
                 type="checkbox"
@@ -38,6 +38,7 @@
               type="text"
               v-model="newToDo.Title"
               v-on:keyup.enter="addToDo"
+              @focusout="addToDo"
               name="Title"
             />
           </div>
@@ -65,7 +66,7 @@
       <div class="col right">
         <div class="div-options">
           <h4>{{ $t('_DONE_LIST') }}</h4>
-          <button @click="onDeleteAllDoneItemsClicked" class="delete-btn header-btn"></button>
+            <i class="material-icons delete-btn header-btn" @click="onDeleteAllDoneItemsClicked">delete_sweep</i>
         </div>
 
         <hr />
@@ -106,9 +107,10 @@ export default {
   methods: {
     addToDo() {
       if (
-        !this.newToDo ||
+        (!this.newToDo ||
         !this.newToDo.Title ||
-        this.newToDo.Title.trim() == ""
+        this.newToDo.Title.trim() == "")
+        && this.newToDo.IsFinished==false
       ) {
         this.newToDo = null;
         return;
@@ -278,21 +280,19 @@ h4 {
   position: absolute;
   float: right;
   right: 22px;
-  background-color: #e6e8ef;
   height: 25px;
   width: 25px;
   border-radius: 50%;
   cursor: pointer;
+  color:#66676a;
 }
 
 .add-btn {
-  background: url("../assets/icons/add.png") no-repeat padding-box center;
   border: 1px solid #e6e8ef;
   background-color: #e6e8ef;
 }
 
 .delete-btn {
-  background: url("../assets/icons/delete.png") no-repeat padding-box center;
   border: none !important;
 }
 
@@ -406,6 +406,7 @@ h4 {
 /*END Checkbox*/
 
 #newtodo-title {
+  font-size: 13px;
   border: none;
   width: 87%;
 }
@@ -469,9 +470,9 @@ h4 {
   .todo-item-image {
     height: 250px;
   }
-  .todo-title,
-  .label-container,
-  .done-title {
+  
+  #newtodo-title
+   {
     font-size: 14px;
   }
   h4 {
@@ -483,13 +484,19 @@ h4 {
   .todo-item-image {
     height: 350px;
   }
-  .todo-title,
-  .label-container,
-  .done-title {
+  #newtodo-title {
     font-size: 16px;
   }
   h4 {
     font-size: 18px;
+  }
+  .header-btn{
+        font-size: 24px;
+    padding: 3px;
+  }
+
+  .checkmark {
+    top: -2px;
   }
 }
 
@@ -516,7 +523,7 @@ h4 {
 }
 
 @media (max-width: 1115px) {
-  .todo-title {
+  #newtodo-title {
     width: 50%;
   }
 }

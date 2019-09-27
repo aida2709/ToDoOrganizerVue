@@ -25,7 +25,7 @@
       <button @click="onShowDropDownClicked(item)" class="item-btn"></button>
       <div class="dropdown-content" v-if="showDropdown && item.Id==selectedItemId">
         <div class="dropdown-item">
-          <img src="../assets/icons/image.png" class="dropdown-img" />
+          <i class="material-icons dropdown-img"> image </i>
           <a
             @click="$emit('upload-image', item); onShowDropDownClicked(item);"
             class="dropdown-label"
@@ -33,7 +33,9 @@
         </div>
 
         <div class="dropdown-item">
-          <img src="../assets/icons/delete-item.png" class="dropdown-img" />
+          <i class="material-icons dropdown-img">
+delete_outline
+</i>
           <a @click="$emit('delete-todo', item)" class="dropdown-label">{{ $t('_DELETE') }}</a>
         </div>
       </div>
@@ -97,7 +99,7 @@ input:focus {
 
 .item-btn {
   float: right;
-  margin-top: -5px;
+  margin-top: -2px;
   background: url("../assets/icons/more.png") no-repeat padding-box center;
   background-color: transparent;
   border: none;
@@ -209,9 +211,10 @@ input:focus {
 
 .dropdown-img {
   float: left;
-  margin-top: 10px;
+  margin-top: 7px;
   margin-left: 5px;
   margin-right: 5px;
+  color: #7f7f7f;
 }
 
 /*END Dropdown*/
@@ -233,6 +236,14 @@ input:focus {
   .todo-title,
   .label-container {
     font-size: 16px;
+  }
+
+  .dropdown-label{
+    font-size:12px;
+  }
+
+  .checkmark{
+    top:2px;
   }
 }
 

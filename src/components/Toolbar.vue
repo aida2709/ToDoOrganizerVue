@@ -9,7 +9,7 @@
           <a class="btn"></a>
 
           <div class="dropdown-content" v-if="showDropdown">
-            <img src="../assets/icons/logout.png" class="logoutImg" />
+            <i class="material-icons logoutImg">exit_to_app</i>
             <a @click="onLogoutClicked" class="logout">{{ $t('_LOGOUT') }}</a>
           </div>
         </li>
@@ -84,7 +84,7 @@ export default {
 
 .navigation-bar li a {
   color: black;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
   line-height: 70px;
   padding: 5px 15px;
@@ -99,7 +99,7 @@ export default {
 
 .btn {
   background: url(../assets/icons/avatar.png) no-repeat padding-box center;
-  background-color: #dadadd;
+  background-color: #e8e9ec;
   background-size: 20px 25px;
   height: 25px;
   width: 5px;
@@ -136,7 +136,7 @@ export default {
   text-decoration: none;
   display: block;
   margin-right: 40px;
-  font-size: 12px !important;
+  font-size: 12px;
   font-weight: bold;
 }
 
@@ -145,6 +145,7 @@ export default {
   float: left;
   left: 5px;
   top: 5px;
+  color:#d1d1d1;
 }
 
 @media (min-width: 1432px) {
@@ -171,8 +172,10 @@ export default {
     line-height: 40px !important;
   }
   .logoutImg {
-    top: 15px;
+    top: 13px;
   }
+
+  
 }
 
 @media (max-width: 1215px) {

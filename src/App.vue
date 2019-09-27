@@ -29,4 +29,8 @@ body {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+input, label, textarea, button{
+  font-family: "Nunito Sans", sans-serif !important;
+}
 </style>
