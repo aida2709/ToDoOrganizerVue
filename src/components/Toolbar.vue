@@ -145,7 +145,7 @@ export default {
   float: left;
   left: 5px;
   top: 5px;
-  color:#d1d1d1;
+  color: #d1d1d1;
 }
 
 @media (min-width: 1432px) {
@@ -174,8 +174,6 @@ export default {
   .logoutImg {
     top: 13px;
   }
-
-  
 }
 
 @media (max-width: 1215px) {

@@ -102,7 +102,6 @@ export default {
       todoList: [],
       doneList: [],
       newToDo: null,
-      selectedItemId: null,
       selectedItemForImageUpload: null,
       image: ""
     };
@@ -163,7 +162,7 @@ export default {
     editToDo(item) {
       TodoService.editToDoItem(item);
       this.todoList = TodoService.getTodoList();
-      this.getToDoList();
+      this.doneList=TodoService.getDoneList();
     },
     uploadImage(item) {
       this.selectedItemForImageUpload = item;
@@ -173,8 +172,6 @@ export default {
       if (TodoService.removeToDoItem(item)) {
         this.todoList = TodoService.getTodoList();
       }
-
-      this.selectedItemId = null;
     },
     onDeleteAllDoneItemsClicked() {
       TodoService.removeAllDoneItems();
@@ -190,7 +187,6 @@ export default {
     onDeleteDoneItemClicked(item) {
       if (TodoService.removeDoneItem(item)) {
         this.doneList = TodoService.getDoneList();
-        this.getDoneList();
       }
     }
   },
