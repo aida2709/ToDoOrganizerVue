@@ -11,7 +11,7 @@
       <div class="col left">
         <div class="div-options">
           <h4>{{ $t('_TODO_LIST') }}</h4>
-            <i class="material-icons add-btn header-btn" @click="onAddToDoItemClicked">add</i>
+          <i class="material-icons add-btn header-btn" @click="onAddToDoItemClicked">add</i>
         </div>
 
         <hr />
@@ -66,7 +66,10 @@
       <div class="col right">
         <div class="div-options">
           <h4>{{ $t('_DONE_LIST') }}</h4>
-            <i class="material-icons delete-btn header-btn" @click="onDeleteAllDoneItemsClicked">delete_sweep</i>
+          <i
+            class="material-icons delete-btn header-btn"
+            @click="onDeleteAllDoneItemsClicked"
+          >delete_sweep</i>
         </div>
 
         <hr />
@@ -107,10 +110,9 @@ export default {
   methods: {
     addToDo() {
       if (
-        (!this.newToDo ||
+        !this.newToDo ||
         !this.newToDo.Title ||
-        this.newToDo.Title.trim() == "")
-        && this.newToDo.IsFinished==false
+        this.newToDo.Title.trim() == ""
       ) {
         this.newToDo = null;
         return;
@@ -284,7 +286,7 @@ h4 {
   width: 25px;
   border-radius: 50%;
   cursor: pointer;
-  color:#66676a;
+  color: #66676a;
 }
 
 .add-btn {
@@ -470,9 +472,8 @@ h4 {
   .todo-item-image {
     height: 250px;
   }
-  
-  #newtodo-title
-   {
+
+  #newtodo-title {
     font-size: 14px;
   }
   h4 {
@@ -490,8 +491,8 @@ h4 {
   h4 {
     font-size: 18px;
   }
-  .header-btn{
-        font-size: 24px;
+  .header-btn {
+    font-size: 24px;
     padding: 3px;
   }
 
