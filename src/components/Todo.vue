@@ -135,7 +135,8 @@ export default {
         Id: draggedElement.Id,
         Title: draggedElement.Title,
         Position: draggedElement.Position,
-        IsFinished: draggedElement.IsFinished
+        IsFinished: draggedElement.IsFinished,
+        Image:draggedElement.Image
       };
 
       //if dragging is in the same list
