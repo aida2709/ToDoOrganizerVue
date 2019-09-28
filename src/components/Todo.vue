@@ -131,9 +131,6 @@ export default {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
 
-      /*  window.console.log(relatedContext);
-      window.console.log(draggedContext);  */
-
       let listElement = {
         Id: draggedElement.Id,
         Title: draggedElement.Title,
@@ -168,7 +165,6 @@ export default {
           }
         } else {
           if (draggedElement.IsFinished == false) {
-            window.console.log("remove TODO add DONE");
             TodoService.removeToDoItem(listElement);
             listElement.IsFinished = true;
 
@@ -177,8 +173,6 @@ export default {
               draggedContext.futureIndex
             );
           } else {
-            window.console.log("remove DONE add TODO");
-
             TodoService.removeDoneItem(listElement);
             listElement.IsFinished = false;
 
