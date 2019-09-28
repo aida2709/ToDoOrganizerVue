@@ -251,6 +251,13 @@ input:focus {
   }
 }
 
+@media (max-width:1400px) {
+  .material-icons{
+    font-size:22px!important;
+  }
+
+}
+
 @media (max-width: 1215px) and (min-width: 880px) {
   .todo-item-image {
     height: 240px;

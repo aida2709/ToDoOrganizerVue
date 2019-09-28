@@ -16,7 +16,11 @@
 
       <p style="display: inline;" class="done-title">{{item.Title}}</p>
 
-      <button @click="$emit('delete-item',item)" class="item-btn delete-item"></button>
+      <button @click="$emit('delete-item',item)" class="item-btn delete-item">
+          <i class="material-icons">delete_outline</i>
+      </button>
+
+
     </div>
   </div>
 </template>
@@ -65,7 +69,6 @@ input:focus {
 .item-btn {
   float: right;
   margin-top: -5px;
-  background: url("../assets/icons/more.png") no-repeat padding-box center;
   background-color: transparent;
   border: none;
   height: 25px;
@@ -137,8 +140,7 @@ input:focus {
 /*END Checkbox*/
 
 .delete-item {
-  background: url("../assets/icons/delete-item.png") no-repeat padding-box
-    center;
+ color: #7f7f7f;
 }
 
 .todo-title {
@@ -171,6 +173,13 @@ input:focus {
   h4 {
     font-size: 18px;
   }
+}
+
+@media (max-width:1400px) {
+  .material-icons{
+    font-size:20px!important;
+  }
+
 }
 
 @media (max-width: 1215px) and (min-width: 880px) {
