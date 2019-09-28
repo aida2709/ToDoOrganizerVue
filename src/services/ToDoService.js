@@ -171,9 +171,9 @@ export default {
             todoList.push(toDoItem);
         }
         else {
-            let index=todoList.findIndex(x=>x.Id==toDoItem.Id);
-            if(index>-1){//if item already exist remove it
-                todoList.splice(index,1);
+            let i=todoList.findIndex(x=>x.Id==toDoItem.Id);
+            if(i>-1){//if item already exist remove it
+                todoList.splice(i,1);
             }
 
             todoList.splice(index, 0, toDoItem);
@@ -201,9 +201,9 @@ export default {
             doneList.push(toDoItem);
         }
         else {
-            let index=doneList.findIndex(x=>x.Id==toDoItem.Id);
-            if(index>-1){//if item already exist remove it
-                doneList.splice(index,1);
+            let i=doneList.findIndex(x=>x.Id==toDoItem.Id);
+            if(i>-1){//if item already exist remove it
+                doneList.splice(i,1);
             }
 
             doneList.splice(index, 0, toDoItem);

@@ -131,7 +131,7 @@ export default {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
 
-     /*  window.console.log(relatedContext);
+      /*  window.console.log(relatedContext);
       window.console.log(draggedContext);  */
 
       let listElement = {
@@ -144,50 +144,50 @@ export default {
       //if dragging is in the same list
       if (relatedElement.IsFinished == draggedElement.IsFinished) {
         if (draggedElement.IsFinished) {
-          if (TodoService.removeDoneItem(listElement)) {
-            TodoService.addDoneItemOnSpecificPosition(
-              listElement,
-              draggedContext.futureIndex
-            );
-          }
+          TodoService.removeDoneItem(listElement);
+          TodoService.addDoneItemOnSpecificPosition(
+            listElement,
+            draggedContext.futureIndex
+          );
         } else {
-          if (TodoService.removeToDoItem(listElement)) {
-            TodoService.addToDoOnSpecificPosition(
-              listElement,
-              draggedContext.futureIndex
-            );
-          }
+          TodoService.removeToDoItem(listElement);
+          TodoService.addToDoOnSpecificPosition(
+            listElement,
+            draggedContext.futureIndex
+          );
         }
       } else {
         if (!relatedElement) {
           //if list to drag element is empty
           if (draggedElement.IsFinished) {
-            if (TodoService.removeDoneItem(listElement)) {
-              TodoService.addToDo(listElement);
-            }
+            TodoService.removeDoneItem(listElement);
+            TodoService.addToDo(listElement);
           } else {
-            if (TodoService.removeToDoItem(listElement)) {
-              TodoService.addDone(listElement);
-            }
+            TodoService.removeToDoItem(listElement);
+            TodoService.addDone(listElement);
           }
         } else {
           if (draggedElement.IsFinished == false) {
-             TodoService.removeToDoItem(listElement);
-              listElement.IsFinished = true;
+            window.console.log("remove TODO add DONE");
+            TodoService.removeToDoItem(listElement);
+            listElement.IsFinished = true;
 
-              TodoService.addDoneItemOnSpecificPosition(
-                listElement,
-                draggedContext.futureIndex
-              );
-            
+            TodoService.addDoneItemOnSpecificPosition(
+              listElement,
+              draggedContext.futureIndex
+            );
           } else {
-            TodoService.removeDoneItem(listElement);
-              listElement.IsFinished = false;
+            window.console.log("remove DONE add TODO");
 
-              TodoService.addToDoOnSpecificPosition(
-                listElement,
-                draggedContext.futureIndex
-              );
+            TodoService.removeDoneItem(listElement);
+            listElement.IsFinished = false;
+
+            window.console.log(listElement);
+            window.console.log(draggedContext.futureIndex);
+            TodoService.addToDoOnSpecificPosition(
+              listElement,
+              draggedContext.futureIndex
+            );
           }
         }
       }
