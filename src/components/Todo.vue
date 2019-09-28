@@ -60,7 +60,7 @@
             @start="isDragging=true"
             @end="isDragging=false"
           >
-            <transition-group type="transition" :name="'flip-list'" >
+            <transition-group type="transition" :name="'flip-list'">
               <div class="main-card" v-bind:key="item.Id" v-for="item in todoList">
                 <TodoItem
                   v-bind:item="item"
@@ -136,19 +136,26 @@ export default {
         Title: draggedElement.Title,
         Position: draggedElement.Position,
         IsFinished: draggedElement.IsFinished,
-        Image:draggedElement.Image
+        Image: draggedElement.Image
       };
 
       //if dragging is in the same list
-      if (relatedElement && relatedElement.IsFinished == draggedElement.IsFinished) {
+      if (
+        relatedElement &&
+        relatedElement.IsFinished == draggedElement.IsFinished
+      ) {
         if (draggedElement.IsFinished) {
           TodoService.removeDoneItem(listElement);
+          TodoService.removeToDoItem(listElement);
+
           TodoService.addDoneItemOnSpecificPosition(
             listElement,
             draggedContext.futureIndex
           );
         } else {
           TodoService.removeToDoItem(listElement);
+          TodoService.removeDoneItem(listElement);
+
           TodoService.addToDoOnSpecificPosition(
             listElement,
             draggedContext.futureIndex
@@ -167,15 +174,18 @@ export default {
         } else {
           if (draggedElement.IsFinished == false) {
             TodoService.removeToDoItem(listElement);
+            TodoService.removeDoneItem(listElement);
+
             listElement.IsFinished = true;
 
             TodoService.addDoneItemOnSpecificPosition(
               listElement,
               draggedContext.futureIndex
             );
-
           } else {
             TodoService.removeDoneItem(listElement);
+            TodoService.removeToDoItem(listElement);
+
             listElement.IsFinished = false;
 
             TodoService.addToDoOnSpecificPosition(
@@ -315,8 +325,8 @@ export default {
   background: #c8ebfb;
 }
 
-.list-group{
-min-height: 20px;
+.list-group {
+  min-height: 20px;
 }
 
 input,
@@ -637,6 +647,13 @@ h4 {
 
   .right {
     right: 0;
+  }
+}
+
+@media (max-width: 1400px) {
+  .todo-title,
+  #newtodo-title {
+    width: 90%;
   }
 }
 
