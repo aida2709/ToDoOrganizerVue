@@ -60,7 +60,7 @@
             @start="isDragging=true"
             @end="isDragging=false"
           >
-            <transition-group type="transition" :name="'flip-list'">
+            <transition-group type="transition" :name="'flip-list'" >
               <div class="main-card" v-bind:key="item.Id" v-for="item in todoList">
                 <TodoItem
                   v-bind:item="item"
@@ -139,7 +139,7 @@ export default {
       };
 
       //if dragging is in the same list
-      if (relatedElement.IsFinished == draggedElement.IsFinished) {
+      if (relatedElement && relatedElement.IsFinished == draggedElement.IsFinished) {
         if (draggedElement.IsFinished) {
           TodoService.removeDoneItem(listElement);
           TodoService.addDoneItemOnSpecificPosition(
@@ -172,12 +172,11 @@ export default {
               listElement,
               draggedContext.futureIndex
             );
+
           } else {
             TodoService.removeDoneItem(listElement);
             listElement.IsFinished = false;
 
-            window.console.log(listElement);
-            window.console.log(draggedContext.futureIndex);
             TodoService.addToDoOnSpecificPosition(
               listElement,
               draggedContext.futureIndex
@@ -314,6 +313,11 @@ export default {
   opacity: 0.5;
   background: #c8ebfb;
 }
+
+.list-group{
+min-height: 20px;
+}
+
 input,
 label,
 button,
