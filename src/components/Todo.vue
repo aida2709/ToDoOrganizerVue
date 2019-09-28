@@ -394,6 +394,7 @@ h4 {
 }
 
 .header-btn {
+  text-align: center;
   position: absolute;
   float: right;
   right: 22px;

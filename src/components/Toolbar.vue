@@ -87,7 +87,7 @@ export default {
   font-size: 14px;
   text-decoration: none;
   line-height: 70px;
-  padding: 7px 15px;
+  padding: 5px 15px;
   opacity: 0.7;
 }
 
@@ -173,6 +173,12 @@ export default {
   }
   .logoutImg {
     top: 13px;
+  }
+}
+
+@media (max-width:1400px) {
+  .navigation-bar li a{
+    font-size:12px;
   }
 }
 
