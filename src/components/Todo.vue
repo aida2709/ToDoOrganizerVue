@@ -131,8 +131,6 @@ export default {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
 
-      window.console.log("da");
-
       window.console.log(relatedElement); //bude undefined ako je doneList prazna
       window.console.log(draggedElement);
 
@@ -154,16 +152,16 @@ export default {
           }
         }
       } else {
-        if (relatedElement.IsFinished == false) {
-          if (TodoService.removeDoneItem(listElement)) {
-            listElement.IsFinished = false;
-            TodoService.addToDo(listElement);
-          }
-        } else {
-          if (TodoService.removeToDoItem(listElement)) {
+        if (draggedElement.IsFinished == false) {
+           if (TodoService.removeToDoItem(listElement)) {
             listElement.IsFinished = true;
 
             TodoService.addDone(listElement);
+          }
+        } else {
+         if (TodoService.removeDoneItem(listElement)) {
+            listElement.IsFinished = false;
+            TodoService.addToDo(listElement);
           }
         }
       }
