@@ -171,6 +171,11 @@ export default {
             todoList.push(toDoItem);
         }
         else {
+            let index=todoList.findIndex(x=>x.Id==toDoItem.Id);
+            if(index>-1){//if item already exist remove it
+                todoList.splice(index,1);
+            }
+
             todoList.splice(index, 0, toDoItem);
             //sort items
             let count = todoList.length;
@@ -196,6 +201,11 @@ export default {
             doneList.push(toDoItem);
         }
         else {
+            let index=doneList.findIndex(x=>x.Id==toDoItem.Id);
+            if(index>-1){//if item already exist remove it
+                doneList.splice(index,1);
+            }
+
             doneList.splice(index, 0, toDoItem);
             //sort items
             let count = doneList.length;
