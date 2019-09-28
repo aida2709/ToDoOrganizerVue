@@ -22,8 +22,8 @@
         name="Title"
       />
 
-      <button @click="onShowDropDownClicked(item)" class="item-btn"></button>
-      <div class="dropdown-content" v-if="showDropdown && item.Id==selectedItemId">
+      <button @click="onShowDropDownClicked(item)" class="item-btn" ref="dropdownMenu"></button>
+      <div class="dropdown-content" v-if="showDropdown && item.Id==selectedItemId" >
         <div class="dropdown-item">
           <i class="material-icons dropdown-img">image</i>
           <a
@@ -54,7 +54,21 @@ export default {
     onShowDropDownClicked(item) {
       this.showDropdown = !this.showDropdown;
       this.selectedItemId = item.Id;
+    },
+    documentClick(e) {
+      let el = this.$refs.dropdownMenu;
+      let target = e.target;
+      if (el !== target && !el.contains(target)) {
+        this.showDropdown = false;
+        this.selectedItemId=null;
+      }
     }
+  },
+  created() {
+    document.addEventListener("click", this.documentClick);
+  },
+  destroyed() {
+    document.removeEventListener("click", this.documentClick);
   }
 };
 </script>
