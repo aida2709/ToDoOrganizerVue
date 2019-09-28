@@ -51,15 +51,27 @@
             @change="onUploadImageClicked($event)"
           />
 
-          <div class="main-card" v-bind:key="item.Id" v-for="item in todoList">
-            <TodoItem
-              v-bind:item="item"
-              v-on:edit-todo="editToDo"
-              v-on:upload-image="uploadImage"
-              v-on:delete-todo="onDeleteToDoItemClicked"
-              v-on:status-changed="onToDoItemStatusChanged"
-            />
-          </div>
+          <draggable
+            class="list-group"
+            tag="div"
+            v-model="todoList"
+            v-bind="dragOptions"
+            :move="onMove"
+            @start="isDragging=true"
+            @end="isDragging=false"
+          >
+            <transition-group type="transition" :name="'flip-list'">
+              <div class="main-card" v-bind:key="item.Id" v-for="item in todoList">
+                <TodoItem
+                  v-bind:item="item"
+                  v-on:edit-todo="editToDo"
+                  v-on:upload-image="uploadImage"
+                  v-on:delete-todo="onDeleteToDoItemClicked"
+                  v-on:status-changed="onToDoItemStatusChanged"
+                />
+              </div>
+            </transition-group>
+          </draggable>
         </div>
       </div>
 
@@ -75,13 +87,17 @@
         <hr />
 
         <div class="card-container">
-          <div class="main-card" v-bind:key="item.Id" v-for="item in doneList">
-            <DoneItem
-              v-bind:item="item"
-              v-on:status-changed="onDoneItemStatusChanged"
-              v-on:delete-item="onDeleteDoneItemClicked"
-            />
-          </div>
+          <draggable element="div" v-model="doneList" v-bind="dragOptions" :move="onMove">
+            <transition-group name="no" class="list-group" tag="div">
+              <div class="main-card" v-bind:key="item.Id" v-for="item in doneList">
+                <DoneItem
+                  v-bind:item="item"
+                  v-on:status-changed="onDoneItemStatusChanged"
+                  v-on:delete-item="onDeleteDoneItemClicked"
+                />
+              </div>
+            </transition-group>
+          </draggable>
         </div>
       </div>
     </div>
@@ -93,20 +109,69 @@ import Toolbar from "./Toolbar";
 import TodoService from "../services/ToDoService";
 import TodoItem from "./TodoItem";
 import DoneItem from "./DoneItem";
+import draggable from "vuedraggable";
 
 export default {
   name: "Todo",
-  components: { Toolbar, TodoItem, DoneItem },
+  components: { Toolbar, TodoItem, DoneItem, draggable },
   data() {
     return {
       todoList: [],
       doneList: [],
       newToDo: null,
       selectedItemForImageUpload: null,
-      image: ""
+      image: "",
+      editable: true,
+      isDragging: false,
+      delayedDragging: false
     };
   },
   methods: {
+    onMove({ relatedContext, draggedContext }) {
+      const relatedElement = relatedContext.element;
+      const draggedElement = draggedContext.element;
+
+      window.console.log("da");
+
+      window.console.log(relatedElement); //bude undefined ako je doneList prazna
+      window.console.log(draggedElement);
+
+      let listElement = {
+        Id: draggedElement.Id,
+        Title: draggedElement.Title,
+        Position: draggedElement.Position,
+        IsFinished: draggedElement.IsFinished
+      };
+
+      if (!relatedElement) {
+        if (draggedElement.IsFinished) {
+          if (TodoService.removeDoneItem(listElement)) {
+            TodoService.addToDo(listElement);
+          }
+        } else {
+          if (TodoService.removeToDoItem(listElement)) {
+            TodoService.addDone(listElement);
+          }
+        }
+      } else {
+        if (relatedElement.IsFinished == false) {
+          if (TodoService.removeDoneItem(listElement)) {
+            listElement.IsFinished = false;
+            TodoService.addToDo(listElement);
+          }
+        } else {
+          if (TodoService.removeToDoItem(listElement)) {
+            listElement.IsFinished = true;
+
+            TodoService.addDone(listElement);
+          }
+        }
+      }
+
+      return (
+        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      );
+    },
     addToDo() {
       if (
         !this.newToDo ||
@@ -162,7 +227,7 @@ export default {
     editToDo(item) {
       TodoService.editToDoItem(item);
       this.todoList = TodoService.getTodoList();
-      this.doneList=TodoService.getDoneList();
+      this.doneList = TodoService.getDoneList();
     },
     uploadImage(item) {
       this.selectedItemForImageUpload = item;
@@ -193,12 +258,43 @@ export default {
   mounted: function() {
     this.todoList = TodoService.getTodoList();
     this.doneList = TodoService.getDoneList();
+  },
+  computed: {
+    dragOptions() {
+      return {
+        animation: 0,
+        group: "description",
+        disabled: !this.editable,
+        ghostClass: "ghost"
+      };
+    },
+    listString() {
+      return JSON.stringify(this.todoList, null, 2);
+    },
+    list2String() {
+      return JSON.stringify(this.doneList, null, 2);
+    }
+  },
+  watch: {
+    isDragging(newValue) {
+      if (newValue) {
+        this.delayedDragging = true;
+        return;
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false;
+      });
+    }
   }
 };
 </script>
 
 
 <style scoped>
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
 input,
 label,
 button,
