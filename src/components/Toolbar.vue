@@ -3,7 +3,7 @@
     <div id="navigation-container">
       <img src="../assets/icons/logo.png" class="logoImg" />
 
-      <ul id="menu">
+      <ul id="menu" ref="dropdownMenu">
         <li @click="onShowDropdownClicked">
           <div class="username">{{username}}</div>
           <a class="btn"></a>
@@ -36,6 +36,16 @@ export default {
     onLogoutClicked() {
       AuthService.logout();
       this.$router.push("login");
+    },
+    closeDropdown() {
+      this.showDropdown = false;
+    },
+    documentClick(e) {
+      let el = this.$refs.dropdownMenu;
+      let target = e.target;
+      if (el !== target && !el.contains(target)) {
+        this.showDropdown = false;
+      }
     }
   },
   mounted: function() {
@@ -44,6 +54,12 @@ export default {
     } else {
       this.username = AuthService.getUsername();
     }
+  },
+  created() {
+    document.addEventListener("click", this.documentClick);
+  },
+  destroyed() {
+    document.removeEventListener("click", this.documentClick);
   }
 };
 </script>
@@ -117,6 +133,7 @@ export default {
   right: 250px;
   font-size: 12px;
   font-weight: bold;
+  color: #66676a;
 }
 
 .dropdown-content {
@@ -176,9 +193,9 @@ export default {
   }
 }
 
-@media (max-width:1400px) {
-  .navigation-bar li a{
-    font-size:12px;
+@media (max-width: 1400px) {
+  .navigation-bar li a {
+    font-size: 12px;
   }
 }
 
@@ -219,6 +236,9 @@ export default {
 
   .username {
     right: 10px;
+  }
+  .dropdown-content {
+    right: 0px;
   }
 }
 </style>
