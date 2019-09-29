@@ -1,18 +1,18 @@
 export default {
 
-    login(email, password, rememberMe) {
-        if (email == "test@test.com" && password == "test") {
+    login(Email, password, RememberMe) {
+        if (Email === "test@test.com" && password === "test") {
             let user = {
-                Email: email,
+                Email,
                 Username: "Username",
-                RememberMe: rememberMe,
+                RememberMe,
             }
 
             localStorage.setItem('loggedUser', JSON.stringify(user));
 
-            return true;
+            return user;
         }
-        return false;
+        return null;
     },
 
     isLogged() {
@@ -20,7 +20,10 @@ export default {
 
         if (data) {
             let user = JSON.parse(data);
-            return user;
+            if(user)
+                return true;
+
+            return false;
         }
         return false;
     },
@@ -30,7 +33,7 @@ export default {
 
         if (data) {
             let user = JSON.parse(data);
-            return (user && user.RememberMe == true);
+            return (user && user.RememberMe);
         }
         return false;
     },

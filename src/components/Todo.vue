@@ -22,13 +22,13 @@
               <input
                 type="checkbox"
                 name="IsFinished"
-                v-bind:value="newToDo.IsFinished"
+                :value="newToDo.IsFinished"
                 v-model="newToDo.IsFinished"
                 id="newtodo-checkbox"
               />
               <span
                 class="checkmark"
-                v-bind:class="{'checkmark-unchecked':!newToDo.IsFinished, 'checkmark-checked':newToDo.IsFinished}"
+                :class="{'checkmark-unchecked':!newToDo.IsFinished, 'checkmark-checked':newToDo.IsFinished}"
               ></span>
             </label>
 
@@ -37,7 +37,7 @@
               autofocus
               type="text"
               v-model="newToDo.Title"
-              v-on:keyup.enter="addToDo"
+              @keyup.enter="addToDo"
               @focusout="addToDo"
               name="Title"
             />
@@ -61,13 +61,13 @@
             @end="isDragging=false"
           >
             <transition-group type="transition" :name="'flip-list'">
-              <div class="main-card" v-bind:key="item.Id" v-for="item in todoList">
+              <div class="main-card" :key="item.Id" v-for="item in todoList">
                 <TodoItem
-                  v-bind:item="item"
-                  v-on:edit-todo="editToDo"
-                  v-on:upload-image="uploadImage"
-                  v-on:delete-todo="onDeleteToDoItemClicked"
-                  v-on:status-changed="onToDoItemStatusChanged"
+                  :item="item"
+                  @edit-todo="editToDo"
+                  @upload-image="uploadImage"
+                  @delete-todo="onDeleteToDoItemClicked"
+                  @status-changed="onToDoItemStatusChanged"
                 />
               </div>
             </transition-group>
@@ -89,11 +89,11 @@
         <div class="card-container">
           <draggable element="div" v-model="doneList" v-bind="dragOptions" :move="onMove">
             <transition-group name="no" class="list-group" tag="div">
-              <div class="main-card" v-bind:key="item.Id" v-for="item in doneList">
+              <div class="main-card" :key="item.Id" v-for="item in doneList">
                 <DoneItem
-                  v-bind:item="item"
-                  v-on:status-changed="onDoneItemStatusChanged"
-                  v-on:delete-item="onDeleteDoneItemClicked"
+                  :item="item"
+                  @status-changed="onDoneItemStatusChanged"
+                  @delete-item="onDeleteDoneItemClicked"
                 />
               </div>
             </transition-group>
@@ -142,7 +142,7 @@ export default {
       //if dragging is in the same list
       if (
         relatedElement &&
-        relatedElement.IsFinished == draggedElement.IsFinished
+        relatedElement.IsFinished === draggedElement.IsFinished
       ) {
         if (draggedElement.IsFinished) {
           TodoService.removeDoneItem(listElement);
@@ -172,7 +172,7 @@ export default {
             TodoService.addDone(listElement);
           }
         } else {
-          if (draggedElement.IsFinished == false) {
+          if (!draggedElement.IsFinished) {
             TodoService.removeToDoItem(listElement);
             TodoService.removeDoneItem(listElement);
 
@@ -205,7 +205,7 @@ export default {
       if (
         !this.newToDo ||
         !this.newToDo.Title ||
-        this.newToDo.Title.trim() == ""
+        this.newToDo.Title.trim() === ""
       ) {
         this.newToDo = null;
         return;
@@ -296,12 +296,6 @@ export default {
         disabled: !this.editable,
         ghostClass: "ghost"
       };
-    },
-    listString() {
-      return JSON.stringify(this.todoList, null, 2);
-    },
-    list2String() {
-      return JSON.stringify(this.doneList, null, 2);
     }
   },
   watch: {
@@ -333,11 +327,11 @@ input,
 label,
 button,
 a {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 input:focus {
-  outline: none !important;
+  outline: none;
 }
 
 /* List positioning */
@@ -422,7 +416,7 @@ h4 {
 }
 
 .delete-btn {
-  border: none !important;
+  border: none;
 }
 
 /*END List header*/

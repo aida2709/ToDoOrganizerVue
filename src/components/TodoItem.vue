@@ -1,15 +1,15 @@
 <template>
   <div>
-    <img v-if="item.Image" v-bind:src="item.Image" class="todo-item-image" />
+    <img v-if="item.Image" :src="item.Image" class="todo-item-image" />
 
     <div class="card">
       <label class="label-container">
         <input
           type="checkbox"
           name="title"
-          v-bind:value="item.IsFinished"
+          :value="item.IsFinished"
           v-model="item.IsFinished"
-          v-on:change="$emit('status-changed',item)"
+          @change="$emit('status-changed',item)"
         />
         <span class="checkmark checkmark-unchecked"></span>
       </label>
@@ -18,12 +18,12 @@
         class="todo-title"
         type="text"
         v-model="item.Title"
-        v-on:keyup.enter="$emit('edit-todo', item)"
+        @keyup.enter="$emit('edit-todo', item)"
         name="Title"
       />
 
       <button @click="onShowDropDownClicked(item)" class="item-btn" ref="dropdownMenu"></button>
-      <div class="dropdown-content" v-if="showDropdown && item.Id==selectedItemId" >
+      <div class="dropdown-content" v-if="showDropdown && item.Id === selectedItemId">
         <div class="dropdown-item">
           <i class="material-icons dropdown-img">image</i>
           <a
@@ -60,7 +60,7 @@ export default {
       let target = e.target;
       if (el !== target && !el.contains(target)) {
         this.showDropdown = false;
-        this.selectedItemId=null;
+        this.selectedItemId = null;
       }
     }
   },
@@ -78,11 +78,11 @@ input,
 label,
 button,
 a {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 input:focus {
-  outline: none !important;
+  outline: none;
 }
 
 /*List items*/
@@ -265,11 +265,10 @@ input:focus {
   }
 }
 
-@media (max-width:1400px) {
-  .material-icons{
-    font-size:22px!important;
+@media (max-width: 1400px) {
+  .material-icons {
+    font-size: 22px;
   }
-
 }
 
 @media (max-width: 1215px) and (min-width: 880px) {

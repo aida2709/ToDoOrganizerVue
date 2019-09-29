@@ -16,8 +16,7 @@ const router = new VueRouter({
   base: __dirname,
   routes: [
     { path: '/', name: 'login', component: Login },
-    { path: '/todo', name: 'todo', component: Todo },
-    { path: '/login', name: 'login', component: Login }
+    { path: '/todo', name: 'todo', component: Todo }
   ]
 })
 

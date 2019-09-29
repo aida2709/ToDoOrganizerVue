@@ -10,27 +10,29 @@ export default {
   name: "app",
   components: {},
   mounted: function() {
-    if (AuthService.isLogged() == true) {
-      if (AuthService.isRememberMeActivated() == true) {
-        this.$router.push("todo");
-      }
+    if (AuthService.isLogged() && AuthService.isRememberMeActivated() && this.$route.name !== 'todo') {
+      this.$router.push({ name: "todo" });
     }
+    else{
+      this.$router.push({ name: "login" });
+    }
+    
   }
 };
 </script>
 
 <style>
 #app {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 body {
-  font-family: "Nunito Sans", sans-serif !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  font-family: "Nunito Sans", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 input, label, textarea, button{
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Nunito Sans", sans-serif;
 }
 </style>

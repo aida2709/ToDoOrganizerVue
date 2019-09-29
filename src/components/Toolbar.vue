@@ -35,7 +35,7 @@ export default {
     },
     onLogoutClicked() {
       AuthService.logout();
-      this.$router.push("login");
+      this.$router.push({ name: "login" });
     },
     closeDropdown() {
       this.showDropdown = false;
@@ -49,11 +49,7 @@ export default {
     }
   },
   mounted: function() {
-    if (AuthService.isLogged() == false) {
-      this.$router.push("login");
-    } else {
       this.username = AuthService.getUsername();
-    }
   },
   created() {
     document.addEventListener("click", this.documentClick);
@@ -149,7 +145,7 @@ export default {
 .logout {
   color: black;
   padding: 12px 16px;
-  line-height: 20px !important;
+  line-height: 20px;
   text-decoration: none;
   display: block;
   margin-right: 40px;
@@ -167,7 +163,7 @@ export default {
 
 @media (min-width: 1432px) {
   .navigation-bar {
-    height: 80px !important;
+    height: 80px;
   }
   .logoImg {
     width: 115px;
@@ -186,7 +182,7 @@ export default {
     top: 80px;
   }
   .logout {
-    line-height: 40px !important;
+    line-height: 40px;
   }
   .logoutImg {
     top: 13px;

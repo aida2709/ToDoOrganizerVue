@@ -13,9 +13,9 @@
             type="text"
             class="form-input"
             v-model="email"
-            v-bind:placeholder="$t('_EMAIL')"
+            :placeholder="$t('_EMAIL')"
             name="emailInput"
-            v-bind:class="{ 'has-error': submitted && !$v.email.required }"
+            :class="{ 'has-error': submitted && !$v.email.required }"
           />
         </div>
 
@@ -25,15 +25,15 @@
             id="passwordId"
             class="form-input"
             v-model="password"
-            v-bind:placeholder="$t('_PASSWORD')"
+            :placeholder="$t('_PASSWORD')"
             name="passwordInput"
-            v-bind:class="{ 'has-error': submitted && !$v.password.required }"
+            :class="{ 'has-error': submitted && !$v.password.required }"
           />
 
           <span
             @click="toggle"
             class="fa fa-lg toggle-password"
-            v-bind:class="{'fa-eye':!showPassword, 'fa-eye-slash':showPassword}"
+            :class="{'fa-eye':!showPassword, 'fa-eye-slash':showPassword}"
           ></span>
         </div>
 
@@ -108,7 +108,7 @@ export default {
 
       if (result) {
         this.isError = false;
-        this.$router.push("todo");
+        this.$router.push({ name: "todo" });
       } else {
         this.isError = true;
       }
@@ -122,7 +122,7 @@ input,
 label,
 button,
 a {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .container {
@@ -220,7 +220,7 @@ input {
   text-decoration: none;
   position: relative;
   display: inline-block;
-  outline: 0 !important;
+  outline: 0;
   color: #aba5b6;
   font-size: 10px;
 }
@@ -290,7 +290,7 @@ input {
 }
 
 .has-error {
-  border: 1px solid #ef8282 !important;
+  border: 1px solid #ef8282;
 }
 
 .label-container {
@@ -446,7 +446,7 @@ input {
 
 @media (min-width: 320px) and (max-width: 480px) {
   .container {
-    top: 10% !important;
+    top: 10%;
   }
 }
 </style>

@@ -1,15 +1,15 @@
 <template>
   <div>
-    <img v-if="item.Image" v-bind:src="item.Image" class="todo-item-image" />
+    <img v-if="item.Image" :src="item.Image" class="todo-item-image" />
 
     <div class="card">
       <label class="label-container">
         <input
           type="checkbox"
           name="title"
-          v-bind:value="item.IsFinished"
+          :value="item.IsFinished"
           v-model="item.IsFinished"
-          v-on:change="$emit('status-changed',item)"
+          @change="$emit('status-changed',item)"
         />
         <span class="checkmark checkmark-checked"></span>
       </label>
@@ -37,11 +37,11 @@ input,
 label,
 button,
 a {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 input:focus {
-  outline: none !important;
+  outline: none;
 }
 
 /*List items*/

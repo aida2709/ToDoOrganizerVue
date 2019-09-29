@@ -59,12 +59,12 @@ export default {
         let todoList = JSON.parse(localStorage.getItem('todoList'));
 
         if (todoList) {
-            let i = todoList.findIndex(x => x.Id === toDoItem.Id);
+            const index = todoList.findIndex(x => x.Id === toDoItem.Id);
 
-            if (i < 0)
+            if (index < 0)
                 return false;
 
-            todoList.splice(i, 1);
+            todoList.splice(index, 1);
 
             localStorage.setItem('todoList', JSON.stringify(todoList));
             return true;
@@ -77,12 +77,12 @@ export default {
         let doneList = JSON.parse(localStorage.getItem('doneList'));
 
         if (doneList) {
-            let i = doneList.findIndex(x => x.Id === doneItem.Id);
+            const index = doneList.findIndex(x => x.Id === doneItem.Id);
 
-            if (i < 0)
+            if (index < 0)
                 return false;
 
-            doneList.splice(i, 1);
+            doneList.splice(index, 1);
             localStorage.setItem('doneList', JSON.stringify(doneList));
             return true;
         }
@@ -165,13 +165,13 @@ export default {
 
         let todoList = this.getTodoList();
 
-        if (!todoList || todoList == []) {
+        if (!todoList.length) {
             todoList = [];
             toDoItem.Position = 1;
             todoList.push(toDoItem);
         }
         else {
-            let i = todoList.findIndex(x => x.Id == toDoItem.Id);
+            let i = todoList.findIndex(x => x.Id === toDoItem.Id);
             if (i > -1) {//if item already exist remove it
                 todoList.splice(i, 1);
             }
@@ -195,13 +195,13 @@ export default {
 
         let doneList = this.getDoneList();
 
-        if (!doneList || doneList == []) {
+        if (!doneList.length) {
             doneList = [];
             toDoItem.Position = 1;
             doneList.push(toDoItem);
         }
         else {
-            let i = doneList.findIndex(x => x.Id == toDoItem.Id);
+            let i = doneList.findIndex(x => x.Id === toDoItem.Id);
             if (i > -1) {//if item already exist remove it
                 doneList.splice(i, 1);
             }
