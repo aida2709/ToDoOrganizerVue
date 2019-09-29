@@ -28,16 +28,19 @@ npm install
 
 After all packages have been successfully installed, you are now ready to compile project for development running command below:
 
-### Compiles and hot-reloads for development
+### Compiles for development
 ```
 npm run serve
 ```
+
+### Build for production
 Command for building for production is:
 
 ```
 npm run build
 ```
 
+### Run app in browser
 When project is successfully compiled, it can be accessed on 
 http://localhost:8080/.
 
