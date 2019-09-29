@@ -10,13 +10,15 @@ export default {
   name: "app",
   components: {},
   mounted: function() {
-    if (AuthService.isLogged() && AuthService.isRememberMeActivated() && this.$route.name !== 'todo') {
+    if (
+      AuthService.isLogged() &&
+      AuthService.isRememberMeActivated() &&
+      this.$route.name !== "todo"
+    ) {
       this.$router.push({ name: "todo" });
-    }
-    else{
+    } else if(this.$route.name !== "login") {
       this.$router.push({ name: "login" });
     }
-    
   }
 };
 </script>
@@ -32,7 +34,10 @@ body {
   padding: 0;
 }
 
-input, label, textarea, button{
+input,
+label,
+textarea,
+button {
   font-family: "Nunito Sans", sans-serif;
 }
 </style>
