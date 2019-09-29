@@ -116,8 +116,6 @@ export default {
   components: { Toolbar, TodoItem, DoneItem, draggable },
   data() {
     return {
-      todoList: [],
-      doneList: [],
       newToDo: null,
       selectedItemForImageUpload: null,
       image: "",
@@ -131,7 +129,7 @@ export default {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
 
-      let listElement = {
+      /* let listElement = {
         Id: draggedElement.Id,
         Title: draggedElement.Title,
         Position: draggedElement.Position,
@@ -194,18 +192,14 @@ export default {
             );
           }
         }
-      }
+      } */
 
       return (
         (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
       );
     },
-    refreshLists() {
-      this.todoList = TodoService.getTodoList();
-      this.doneList = TodoService.getDoneList();
-    },
     addToDo() {
-      if (
+      /* if (
         !this.newToDo ||
         !this.newToDo.Title ||
         this.newToDo.Title.trim() === ""
@@ -221,16 +215,17 @@ export default {
       }
 
       this.newToDo = null;
-      this.refreshLists();
+      this.refreshLists(); */
     },
     onAddToDoItemClicked() {
-      this.newToDo = {
+      /* this.newToDo = {
         Title: "",
         IsFinished: false
-      };
+      }; */
     },
     onUploadImageClicked(event) {
-      if (!this.selectedItemForImageUpload) {
+      window.console.log(event);
+      /* if (!this.selectedItemForImageUpload) {
         return;
       }
 
@@ -246,47 +241,61 @@ export default {
           TodoService.editToDoItem(this.selectedItemForImageUpload);
           this.refreshLists();
         };
-      }
+      } */
     },
     onToDoItemStatusChanged(item) {
-      if (TodoService.removeToDoItem(item)) {
-        TodoService.addDone(item);
-        this.refreshLists();
-      }
+      window.console.log(item);
+       if (TodoService.removeToDoItem(item)) {
+        /*TodoService.addDone(item);
+        this.refreshLists();*/
+      } 
     },
     editToDo(item) {
-      TodoService.editToDoItem(item);
-      this.refreshLists();
+      window.console.log(item);
+
+      /* TodoService.editToDoItem(item);
+      this.refreshLists(); */
     },
     uploadImage(item) {
-      this.selectedItemForImageUpload = item;
-      document.getElementById("imgupload").click();
+      window.console.log(item);
+
+      /* this.selectedItemForImageUpload = item;
+      document.getElementById("imgupload").click(); */
     },
     onDeleteToDoItemClicked(item) {
-      if (TodoService.removeToDoItem(item)) {
+      window.console.log(item);
+
+      /* if (TodoService.removeToDoItem(item)) {
         this.refreshLists();
-      }
+      } */
     },
     onDeleteAllDoneItemsClicked() {
-      TodoService.removeAllDoneItems();
-      this.refreshLists();
+      /* TodoService.removeAllDoneItems();
+      this.refreshLists(); */
     },
     onDoneItemStatusChanged(item) {
-      if (TodoService.removeDoneItem(item)) {
+      window.console.log(item);
+
+      /*  if (TodoService.removeDoneItem(item)) {
         TodoService.addToDo(item);
         this.refreshLists();
-      }
+      } */
     },
     onDeleteDoneItemClicked(item) {
-      if (TodoService.removeDoneItem(item)) {
+      window.console.log(item);
+
+      /* if (TodoService.removeDoneItem(item)) {
         this.refreshLists();
-      }
+      } */
     }
   },
-  mounted: function() {
-    this.refreshLists();
-  },
   computed: {
+    todoList() {
+      return this.$store.getters.todoList;
+    },
+    doneList() {
+      return this.$store.getters.doneList;
+    },
     dragOptions() {
       return {
         animation: 0,

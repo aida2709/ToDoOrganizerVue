@@ -1,6 +1,9 @@
 <template>
   <div class="navigation-bar">
+
     <div id="navigation-container">
+    <h1>{{ count }}</h1>
+
       <img src="../assets/icons/logo.png" class="logoImg" />
 
       <ul id="menu" ref="dropdownMenu">
@@ -56,6 +59,11 @@ export default {
   },
   destroyed() {
     document.removeEventListener("click", this.documentClick);
+  },
+  computed: {
+    count () {
+      return this.$store.state.count
+    }
   }
 };
 </script>
