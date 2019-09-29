@@ -46,11 +46,10 @@
             </label>
           </div>
           <div class="col m--align-right m-login__form-right">
-            <a
-              href="javascript:;"
+            <span
               id="m_login_forget_password"
               class="m-link"
-            >{{ $t('_FORGET_PASSWORD') }}</a>
+            >{{ $t('_FORGET_PASSWORD') }}</span>
           </div>
         </div>
 
@@ -214,6 +213,10 @@ input {
 
 .m--align-right {
   text-align: right;
+}
+
+#m_login_forget_password{
+  cursor: pointer;
 }
 
 .m-link {

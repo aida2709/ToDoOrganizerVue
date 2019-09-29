@@ -12,10 +12,11 @@ export default {
   mounted: function() {
     if (
       AuthService.isLogged() &&
-      AuthService.isRememberMeActivated() &&
-      this.$route.name !== "todo"
+      AuthService.isRememberMeActivated()
     ) {
-      this.$router.push({ name: "todo" });
+      if(this.$route.name !== "todo"){
+this.$router.push({ name: "todo" });
+      }
     } else if(this.$route.name !== "login") {
       this.$router.push({ name: "login" });
     }

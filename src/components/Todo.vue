@@ -200,7 +200,10 @@ export default {
         (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
       );
     },
-
+    refreshLists() {
+      this.todoList = TodoService.getTodoList();
+      this.doneList = TodoService.getDoneList();
+    },
     addToDo() {
       if (
         !this.newToDo ||
@@ -213,13 +216,12 @@ export default {
 
       if (this.newToDo.IsFinished) {
         TodoService.addDone(this.newToDo);
-        this.doneList = TodoService.getDoneList();
       } else {
         TodoService.addToDo(this.newToDo);
-        this.todoList = TodoService.getTodoList();
       }
 
       this.newToDo = null;
+      this.refreshLists();
     },
     onAddToDoItemClicked() {
       this.newToDo = {
@@ -242,21 +244,19 @@ export default {
           this.image = reader.result;
           this.selectedItemForImageUpload.Image = this.image.toString();
           TodoService.editToDoItem(this.selectedItemForImageUpload);
-          this.todoList = TodoService.getTodoList();
+          this.refreshLists();
         };
       }
     },
     onToDoItemStatusChanged(item) {
       if (TodoService.removeToDoItem(item)) {
         TodoService.addDone(item);
-        this.todoList = TodoService.getTodoList();
-        this.doneList = TodoService.getDoneList();
+        this.refreshLists();
       }
     },
     editToDo(item) {
       TodoService.editToDoItem(item);
-      this.todoList = TodoService.getTodoList();
-      this.doneList = TodoService.getDoneList();
+      this.refreshLists();
     },
     uploadImage(item) {
       this.selectedItemForImageUpload = item;
@@ -264,29 +264,27 @@ export default {
     },
     onDeleteToDoItemClicked(item) {
       if (TodoService.removeToDoItem(item)) {
-        this.todoList = TodoService.getTodoList();
+        this.refreshLists();
       }
     },
     onDeleteAllDoneItemsClicked() {
       TodoService.removeAllDoneItems();
-      this.doneList = TodoService.getDoneList();
+      this.refreshLists();
     },
     onDoneItemStatusChanged(item) {
       if (TodoService.removeDoneItem(item)) {
         TodoService.addToDo(item);
-        this.todoList = TodoService.getTodoList();
-        this.doneList = TodoService.getDoneList();
+        this.refreshLists();
       }
     },
     onDeleteDoneItemClicked(item) {
       if (TodoService.removeDoneItem(item)) {
-        this.doneList = TodoService.getDoneList();
+        this.refreshLists();
       }
     }
   },
   mounted: function() {
-    this.todoList = TodoService.getTodoList();
-    this.doneList = TodoService.getDoneList();
+    this.refreshLists();
   },
   computed: {
     dragOptions() {
