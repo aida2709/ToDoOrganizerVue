@@ -10,14 +10,11 @@ export default {
   name: "app",
   components: {},
   mounted: function() {
-    if (
-      AuthService.isLogged() &&
-      AuthService.isRememberMeActivated()
-    ) {
-      if(this.$route.name !== "todo"){
-this.$router.push({ name: "todo" });
+    if (AuthService.isLogged() && AuthService.isRememberMeActivated()) {
+      if (this.$route.name !== "todo") {
+        this.$router.push({ name: "todo" });
       }
-    } else if(this.$route.name !== "login") {
+    } else if (this.$route.name !== "login") {
       this.$router.push({ name: "login" });
     }
   }
