@@ -93,11 +93,21 @@ export default {
   display: inline;
 }
 
+.logout {
+  color: black;
+  padding: 12px 16px;
+  line-height: 20px;
+  text-decoration: none;
+  display: block;
+  margin-right: 40px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 .navigation-bar li a {
   color: black;
   font-size: 14px;
   text-decoration: none;
-  line-height: 70px;
   padding: 5px 15px;
   opacity: 0.7;
 }
@@ -141,16 +151,7 @@ export default {
   z-index: 1;
 }
 
-.logout {
-  color: black;
-  padding: 12px 16px;
-  line-height: 20px;
-  text-decoration: none;
-  display: block;
-  margin-right: 40px;
-  font-size: 12px;
-  font-weight: bold;
-}
+
 
 .logoutImg {
   position: absolute;
