@@ -48,6 +48,7 @@ import {
   ADD_DONE_ITEM,
   TODO_MODULE
 } from "../store/mutation-types";
+
 export default {
   name: "TodoItem",
   props: ["item"],
@@ -70,7 +71,9 @@ export default {
       }
     },
     onDeleteToDoItemClicked(item) {
-      this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, item);
+      //this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, item);
+
+      this.$store.dispatch('DELETE_TODO_ITEM', item);
     },
     editToDo(item) {
       this.$store.commit(TODO_MODULE + EDIT_TO_DO_ITEM, item);

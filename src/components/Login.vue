@@ -103,9 +103,10 @@ export default {
         Password: this.password,
         RememberMe: this.rememberMe
       };
-      this.$store.commit("authModule/"+LOGIN, user);
+      //this.$store.commit("authModule/"+LOGIN, user);
+      this.$store.dispatch('LOGIN', user);
 
-      if (this.$store.getters["authModule/isLogged"]) {
+      if (this.isLogged) {
         this.isError = false;
         this.$router.push({ name: "todo" });
       } else {
@@ -115,7 +116,7 @@ export default {
   },
   computed: {
     isLogged() {
-      return this.$store.getters["authModule/isLogged"];
+      return this.$store.getters.isLogged;
     }
   }
 };

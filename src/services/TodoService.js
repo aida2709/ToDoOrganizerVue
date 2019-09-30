@@ -62,15 +62,14 @@ export default {
             const index = todoList.findIndex(x => x.Id === toDoItem.Id);
 
             if (index < 0)
-                return false;
+                return todoList;
 
             todoList.splice(index, 1);
 
             localStorage.setItem('todoList', JSON.stringify(todoList));
-            return true;
         }
 
-        return false;
+        return todoList;
     },
 
     removeDoneItem(doneItem) {
