@@ -45,6 +45,7 @@
 
           <input
             type="file"
+            ref="imgUpload"
             accept=".png, .jpg, .jpeg"
             id="imgupload"
             style="display:none"
@@ -161,7 +162,7 @@ export default {
     },
     uploadImage(item) {
       this.selectedItemForImageUpload = item;
-      document.getElementById("imgupload").click();
+      this.$refs.imgUpload.click()
     },
     onDeleteAllDoneItemsClicked() {
       this.$store.dispatch("REMOVE_ALL_DONE_ITEMS");
