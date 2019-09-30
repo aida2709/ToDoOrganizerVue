@@ -148,10 +148,10 @@ export default {
         let todoList = JSON.parse(localStorage.getItem('todoList'));
 
         if (todoList) {
-            let i = todoList.findIndex(x => x.Id === editedItem.Id);
+            let index = todoList.findIndex(x => x.Id === editedItem.Id);
 
-            if (i >= 0) {
-                todoList.splice(i, 1, editedItem)
+            if (index >= 0) {
+                todoList.splice(index, 1, editedItem)
                 localStorage.setItem('todoList', JSON.stringify(todoList));
             }
         }

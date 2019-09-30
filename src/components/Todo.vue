@@ -51,17 +51,15 @@
             @change="onUploadImageClicked($event)"
           />
 
-         
-              <div class="main-card" :key="item.Id" v-for="item in todoList">
-                <TodoItem
-                  :item="item"
-                  @edit-todo="editToDo"
-                  @upload-image="uploadImage"
-                  @delete-todo="onDeleteToDoItemClicked"
-                  @status-changed="onToDoItemStatusChanged"
-                />
-              </div>
-            
+          <div class="main-card" :key="item.Id" v-for="item in todoList">
+            <TodoItem
+              :item="item"
+              @edit-todo="editToDo"
+              @upload-image="uploadImage"
+              @delete-todo="onDeleteToDoItemClicked"
+              @status-changed="onToDoItemStatusChanged"
+            />
+          </div>
         </div>
       </div>
 
@@ -77,13 +75,13 @@
         <hr />
 
         <div class="card-container">
-              <div class="main-card" :key="item.Id" v-for="item in doneList">
-                <DoneItem
-                  :item="item"
-                  @status-changed="onDoneItemStatusChanged"
-                  @delete-item="onDeleteDoneItemClicked"
-                />
-              </div>
+          <div class="main-card" :key="item.Id" v-for="item in doneList">
+            <DoneItem
+              :item="item"
+              @status-changed="onDoneItemStatusChanged"
+              @delete-item="onDeleteDoneItemClicked"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -96,8 +94,14 @@ import TodoService from "../services/ToDoService";
 import TodoItem from "./TodoItem";
 import DoneItem from "./DoneItem";
 /* import draggable from "vuedraggable"; */
-import { ADD_TO_DO_ITEM, ADD_DONE_ITEM } from '../store/mutation-types'
-
+import {
+  ADD_TO_DO_ITEM,
+  ADD_DONE_ITEM,
+  REMOVE_TO_DO_ITEM,
+  REMOVE_DONE_ITEM,
+  REMOVE_ALL_DONE_ITEMS,
+  EDIT_TO_DO_ITEM
+} from "../store/mutation-types";
 
 export default {
   name: "Todo",
@@ -187,7 +191,7 @@ export default {
       );
     },
     addToDo() {
-       if (
+      if (
         !this.newToDo ||
         !this.newToDo.Title ||
         this.newToDo.Title.trim() === ""
@@ -197,19 +201,16 @@ export default {
       }
 
       if (this.newToDo.IsFinished) {
-        //TodoService.addDone(this.newToDo);
-        this.$store.commit(ADD_DONE_ITEM,this.newToDo);
-
+        this.$store.commit(ADD_DONE_ITEM, this.newToDo);
       } else {
-        //TodoService.addToDo(this.newToDo);
-        this.$store.commit(ADD_TO_DO_ITEM,this.newToDo);
+        this.$store.commit(ADD_TO_DO_ITEM, this.newToDo);
       }
 
       this.newToDo = null;
-      //this.refreshLists(); 
+      //this.refreshLists();
     },
     onAddToDoItemClicked() {
-       this.newToDo = {
+      this.newToDo = {
         Title: "",
         IsFinished: false
       };
@@ -235,17 +236,11 @@ export default {
       } */
     },
     onToDoItemStatusChanged(item) {
-      window.console.log(item);
-       if (TodoService.removeToDoItem(item)) {
-        /*TodoService.addDone(item);
-        this.refreshLists();*/
-      } 
+      this.$store.commit(REMOVE_TO_DO_ITEM, item);
+      this.$store.commit(ADD_DONE_ITEM, item);
     },
     editToDo(item) {
-      window.console.log(item);
-
-      /* TodoService.editToDoItem(item);
-      this.refreshLists(); */
+      this.$store.commit(EDIT_TO_DO_ITEM, item);
     },
     uploadImage(item) {
       window.console.log(item);
@@ -254,30 +249,17 @@ export default {
       document.getElementById("imgupload").click(); */
     },
     onDeleteToDoItemClicked(item) {
-      window.console.log(item);
-
-      /* if (TodoService.removeToDoItem(item)) {
-        this.refreshLists();
-      } */
+      this.$store.commit(REMOVE_TO_DO_ITEM, item);
     },
     onDeleteAllDoneItemsClicked() {
-      /* TodoService.removeAllDoneItems();
-      this.refreshLists(); */
+      this.$store.commit(REMOVE_ALL_DONE_ITEMS);
     },
     onDoneItemStatusChanged(item) {
-      window.console.log(item);
-
-      /*  if (TodoService.removeDoneItem(item)) {
-        TodoService.addToDo(item);
-        this.refreshLists();
-      } */
+      this.$store.commit(REMOVE_DONE_ITEM, item);
+      this.$store.commit(ADD_TO_DO_ITEM, item);
     },
     onDeleteDoneItemClicked(item) {
-      window.console.log(item);
-
-      /* if (TodoService.removeDoneItem(item)) {
-        this.refreshLists();
-      } */
+      this.$store.commit(REMOVE_DONE_ITEM, item);
     }
   },
   computed: {
