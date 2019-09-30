@@ -72,35 +72,11 @@ function getPositionForDoneItem(state) {
   return position;
 }
 
-const store = new Vuex.Store({
+const TodoModule = {
+  namespaced: true,
   state: {
     todoList: JSON.parse(localStorage.getItem('todoList')),
     doneList: JSON.parse(localStorage.getItem('doneList')),
-    loggedUser: JSON.parse(localStorage.getItem('loggedUser')),
-
-  },
-  getters: {
-    todoList: state => {
-      return state.todoList;
-    },
-    doneList: state => {
-      return state.doneList;
-    },
-    isLogged: state => {
-      if (state.loggedUser)
-        return true;
-
-      return false;
-    },
-    isRememberMeActivated: state => {
-      if (state.loggedUser && state.loggedUser.RememberMe)
-        return true;
-
-      return false;
-    },
-    getUsername: state => {
-      return state.loggedUser ? state.loggedUser.Username : '';
-    }
   },
   mutations: {
     [ADD_TO_DO_ITEM](state, toDoItem) {
@@ -173,7 +149,43 @@ const store = new Vuex.Store({
           localStorage.setItem('todoList', JSON.stringify(state.todoList));
         }
       }
+    }
+  },
+  getters: {
+    todoList : state=> {
+      return state.todoList;
     },
+    doneList: state => {
+      return state.doneList;
+    },
+  }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    todoModule: TodoModule
+  },
+  state: {
+    loggedUser: JSON.parse(localStorage.getItem('loggedUser')),
+  },
+  getters: {
+    isLogged: state => {
+      if (state.loggedUser)
+        return true;
+
+      return false;
+    },
+    isRememberMeActivated: state => {
+      if (state.loggedUser && state.loggedUser.RememberMe)
+        return true;
+
+      return false;
+    },
+    getUsername: state => {
+      return state.loggedUser ? state.loggedUser.Username : '';
+    }
+  },
+  mutations: {
     [LOGOUT](state) {
       localStorage.removeItem('loggedUser');
       state.loggedUser = null;
