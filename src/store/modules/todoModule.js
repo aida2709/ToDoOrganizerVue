@@ -1,4 +1,4 @@
-import { ADD_TO_DO_ITEM, ADD_DONE_ITEM, REMOVE_TO_DO_ITEM, REMOVE_DONE_ITEM, REMOVE_ALL_DONE_ITEMS, EDIT_TO_DO_ITEM } from '../mutation-types'
+import { ADD_TO_DO_ITEM, ADD_DONE_ITEM, REMOVE_TO_DO_ITEM, REMOVE_DONE_ITEM, REMOVE_ALL_DONE_ITEMS, EDIT_TO_DO_ITEM, ADD_TO_DO_ITEM_ON_POSITION, ADD_DONE_ITEM_ON_POSITION } from '../mutation-types'
 
 
 function getNextId(state) {
@@ -91,30 +91,24 @@ const TodoModule = {
         const index = state.todoList.findIndex(x => x.Id === toDoItem.Id);
 
         if (index < 0)
-          return false;
+          return;
 
         state.todoList.splice(index, 1);
 
         localStorage.setItem('todoList', JSON.stringify(state.todoList));
-        return true;
       }
-
-      return false;
     },
     [REMOVE_DONE_ITEM](state, toDoItem) {
       if (state.doneList) {
         const index = state.doneList.findIndex(x => x.Id === toDoItem.Id);
 
         if (index < 0)
-          return false;
+          return;
 
         state.doneList.splice(index, 1);
 
         localStorage.setItem('doneList', JSON.stringify(state.doneList));
-        return true;
       }
-
-      return false;
     },
     [REMOVE_ALL_DONE_ITEMS](state) {
       localStorage.removeItem('doneList');
@@ -129,8 +123,73 @@ const TodoModule = {
           state.todoList = JSON.parse(localStorage.getItem('todoList')); //this 'list force refreshing' is done because of file uploading
         }
       }
+    },
+    [ADD_TO_DO_ITEM_ON_POSITION](state, payload) {
+      let toDoItem=payload.toDoItem;
+      let index=payload.index;
+
+      toDoItem.IsFinished = false;
+
+      if (!toDoItem.Id)//if item already has its id, do not update it
+        toDoItem.Id = getNextId();
+
+      if (!state.todoList.length) {
+        state.todoList = [];
+        toDoItem.Position = 1;
+        state.todoList.push(toDoItem);
+      }
+      else {
+        const foundedIndex = state.todoList.findIndex(x => x.Id === toDoItem.Id);
+        if (foundedIndex > -1) {//if item already exist remove it
+          state.todoList.splice(foundedIndex, 1);
+        }
+
+        state.todoList.splice(index, 0, toDoItem);
+        //sort items
+        const count = state.todoList.length;
+        for (let i = 0; i < count; i++) {
+          state.todoList[i].Position = count - i;
+        }
+      }
+
+      localStorage.setItem('todoList', JSON.stringify(state.todoList));
+    },
+    [ADD_DONE_ITEM_ON_POSITION](state, payload) {
+
+      let toDoItem=payload.toDoItem;
+      let index=payload.index;
+
+      window.console.log(toDoItem);
+      window.console.log(index);
+      toDoItem.IsFinished = true;
+
+
+       if (!toDoItem.Id)//if item already has its id, do not update it
+        toDoItem.Id = getNextId();
+
+      if (!state.doneList.length) {
+        state.doneList = [];
+        toDoItem.Position = 1;
+        state.doneList.push(toDoItem);
+      }
+      else {
+        const foundedIndex = state.doneList.findIndex(x => x.Id === toDoItem.Id);
+        if (foundedIndex > -1) {//if item already exist remove it
+          state.doneList.splice(foundedIndex, 1);
+        }
+
+        state.doneList.splice(index, 0, toDoItem);
+        //sort items
+        const count = state.doneList.length;
+        for (let i = 0; i < count; i++) {
+          state.doneList[i].Position = count - i;
+        }
+      }
+
+      localStorage.setItem('doneList', JSON.stringify(state.doneList)); 
     }
   },
+
   getters: {
     todoList: state => {
       return state.todoList.sort(sortByPosition);

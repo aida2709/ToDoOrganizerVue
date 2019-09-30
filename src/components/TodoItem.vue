@@ -18,7 +18,7 @@
         class="todo-title"
         type="text"
         v-model="item.Title"
-        @keyup.enter="editToDo(item)"
+        @keyup.enter="editToDo(item); $event.target.blur();"
         name="Title"
       />
 
