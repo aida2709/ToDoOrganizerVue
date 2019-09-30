@@ -35,7 +35,7 @@ export default {
       this.showDropdown = !this.showDropdown;
     },
     onLogoutClicked() {
-      this.$store.commit('authModule/logout');
+      this.$store.commit('authModule/'+LOGOUT);
       this.$router.push({ name: "login" });
     },
     closeDropdown() {

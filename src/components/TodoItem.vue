@@ -9,7 +9,7 @@
           name="title"
           :value="item.IsFinished"
           v-model="item.IsFinished"
-          @change="$emit('status-changed',item)"
+          @change="onToDoItemStatusChanged(item)"
         />
         <span class="checkmark checkmark-unchecked"></span>
       </label>
@@ -18,7 +18,7 @@
         class="todo-title"
         type="text"
         v-model="item.Title"
-        @keyup.enter="$emit('edit-todo', item)"
+        @keyup.enter="editToDo(item)"
         name="Title"
       />
 
@@ -34,7 +34,7 @@
 
         <div class="dropdown-item">
           <i class="material-icons dropdown-img">delete_outline</i>
-          <a @click="$emit('delete-todo', item)" class="dropdown-label">{{ $t('_DELETE') }}</a>
+          <a @click="onDeleteToDoItemClicked(item)" class="dropdown-label">{{ $t('_DELETE') }}</a>
         </div>
       </div>
     </div>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { REMOVE_TO_DO_ITEM,EDIT_TO_DO_ITEM, ADD_DONE_ITEM } from "../store/mutation-types";
 export default {
   name: "TodoItem",
   props: ["item"],
@@ -62,7 +63,17 @@ export default {
         this.showDropdown = false;
         this.selectedItemId = null;
       }
-    }
+    },
+    onDeleteToDoItemClicked(item) {
+      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
+    },
+    editToDo(item) {
+      this.$store.commit("todoModule/" + EDIT_TO_DO_ITEM, item);
+    },
+    onToDoItemStatusChanged(item) {
+      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
+      this.$store.commit("todoModule/" + ADD_DONE_ITEM, item);
+    },
   },
   created() {
     document.addEventListener("click", this.documentClick);

@@ -54,10 +54,7 @@
           <div class="main-card" :key="item.Id" v-for="item in todoList">
             <TodoItem
               :item="item"
-              @edit-todo="editToDo"
               @upload-image="uploadImage"
-              @delete-todo="onDeleteToDoItemClicked"
-              @status-changed="onToDoItemStatusChanged"
             />
           </div>
         </div>
@@ -96,7 +93,6 @@ import DoneItem from "./DoneItem";
 import {
   ADD_TO_DO_ITEM,
   ADD_DONE_ITEM,
-  REMOVE_TO_DO_ITEM,
   REMOVE_DONE_ITEM,
   REMOVE_ALL_DONE_ITEMS,
   EDIT_TO_DO_ITEM
@@ -235,19 +231,9 @@ export default {
         };
       }
     },
-    onToDoItemStatusChanged(item) {
-      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
-      this.$store.commit("todoModule/" + ADD_DONE_ITEM, item);
-    },
-    editToDo(item) {
-      this.$store.commit("todoModule/" + EDIT_TO_DO_ITEM, item);
-    },
     uploadImage(item) {
       this.selectedItemForImageUpload = item;
       document.getElementById("imgupload").click();
-    },
-    onDeleteToDoItemClicked(item) {
-      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
     },
     onDeleteAllDoneItemsClicked() {
       this.$store.commit("todoModule/" + REMOVE_ALL_DONE_ITEMS);
