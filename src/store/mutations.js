@@ -6,5 +6,8 @@ export default {
     },
     SET_LOGGED_USER: (state, payload) => {
         Vue.set(state, 'loggedUser', payload);
-    }
+    },
+    LOGOUT: (state) => {
+        Vue.set(state, 'loggedUser', null);
+    },
 }
