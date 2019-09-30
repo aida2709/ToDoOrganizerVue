@@ -103,8 +103,7 @@ export default {
         Password: this.password,
         RememberMe: this.rememberMe
       };
-      //this.$store.commit("authModule/"+LOGIN, user);
-      this.$store.dispatch('LOGIN', user);
+      this.$store.dispatch("LOGIN", user);
 
       if (this.isLogged) {
         this.isError = false;

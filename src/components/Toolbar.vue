@@ -33,8 +33,7 @@ export default {
       this.showDropdown = !this.showDropdown;
     },
     onLogoutClicked() {
-      //this.$store.commit(AUTH_MODULE + LOGOUT);
-      this.$store.dispatch('LOGOUT');
+      this.$store.dispatch("LOGOUT");
       this.$router.push({ name: "login" });
     },
     closeDropdown() {
@@ -50,7 +49,7 @@ export default {
   },
   computed: {
     username() {
-      return this.$store.getters["authModule/getUsername"];
+      return this.$store.getters.getUsername;
     }
   },
   created() {

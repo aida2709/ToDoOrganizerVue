@@ -20,7 +20,6 @@ export default {
     },
     EDIT_TODO_ITEM: ({ commit }, payload) => {
         let response = TodoService.editToDoItem(payload);
-        window.console.log(response);
         commit('UPDATE_TODO_LIST', response);
     },
     UPDATE_TODO_LIST: ({ commit }, payload) => {
@@ -30,11 +29,11 @@ export default {
         commit('UPDATE_DONE_LIST', payload);
     },
     ADD_TODO_ITEM: ({ commit }, payload) => {
-        let response=TodoService.addToDo(payload);
+        let response = TodoService.addToDo(payload);
         commit('UPDATE_TODO_LIST', response);
     },
     ADD_DONE_ITEM: ({ commit }, payload) => {
-        let response=TodoService.addDone(payload);
+        let response = TodoService.addDone(payload);
         commit('UPDATE_DONE_LIST', response);
     },
     REMOVE_ALL_DONE_ITEMS: ({ commit }) => {
@@ -42,15 +41,15 @@ export default {
         commit('UPDATE_DONE_LIST', []);
     },
     TODO_ITEM_STATUS_CHANGED: ({ commit }, payload) => {
-        let todoList=TodoService.removeToDoItem(payload);
-        let doneList=TodoService.addDone(payload);
+        let todoList = TodoService.removeToDoItem(payload);
+        let doneList = TodoService.addDone(payload);
 
         commit('UPDATE_TODO_LIST', todoList);
         commit('UPDATE_DONE_LIST', doneList);
     },
     DONE_ITEM_STATUS_CHANGED: ({ commit }, payload) => {
-        let doneList=TodoService.removeDoneItem(payload);
-        let todoList=TodoService.addToDo(payload);
+        let doneList = TodoService.removeDoneItem(payload);
+        let todoList = TodoService.addToDo(payload);
 
         commit('UPDATE_TODO_LIST', todoList);
         commit('UPDATE_DONE_LIST', doneList);

@@ -124,10 +124,8 @@ export default {
       }
 
       if (this.newToDo.IsFinished) {
-        //this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, this.newToDo);
         this.$store.dispatch("ADD_DONE_ITEM", this.newToDo);
       } else {
-        //this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, this.newToDo);
         this.$store.dispatch("ADD_TODO_ITEM", this.newToDo);
       }
 
@@ -158,11 +156,6 @@ export default {
             "EDIT_TODO_ITEM",
             this.selectedItemForImageUpload
           );
-
-          /*  this.$store.commit(
-            TODO_MODULE + EDIT_TO_DO_ITEM,
-            this.selectedItemForImageUpload
-          ); */
         };
       }
     },
@@ -172,16 +165,9 @@ export default {
     },
     onDeleteAllDoneItemsClicked() {
       this.$store.dispatch("REMOVE_ALL_DONE_ITEMS");
-      //this.$store.commit(TODO_MODULE + REMOVE_ALL_DONE_ITEMS);
     }
   },
   computed: {
-    /* todoList() {
-      return this.$store.getters[TODO_MODULE + "todoList"];
-    },
-    doneList() {
-      return this.$store.getters[TODO_MODULE + "doneList"];
-    }, */
     dragOptions() {
       return {
         animation: 0,
@@ -196,7 +182,6 @@ export default {
       },
       set(value) {
         this.$store.dispatch("UPDATE_TODO_LIST", value);
-        //this.$store.commit(TODO_MODULE + UPDATE_TO_DO_ITEMS, value);
       }
     },
     doneList: {
@@ -205,7 +190,6 @@ export default {
       },
       set(value) {
         this.$store.dispatch("UPDATE_DONE_LIST", value);
-        //this.$store.commit(TODO_MODULE + UPDATE_DONE_ITEMS, value);
       }
     }
   },

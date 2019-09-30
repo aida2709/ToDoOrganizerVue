@@ -87,8 +87,6 @@ const TodoModule = {
       localStorage.setItem('doneList', JSON.stringify(state.doneList));
     },
     [REMOVE_TO_DO_ITEM](state, toDoItem) {
-      window.console.log('REMOVE TO DO ITEM');
-      window.console.log(toDoItem);
 
       if (state.todoList) {
         const index = state.todoList.findIndex(x => x.Id === toDoItem.Id);
