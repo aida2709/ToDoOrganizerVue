@@ -151,7 +151,6 @@ const store = new Vuex.Store({
     [EDIT_TO_DO_ITEM](state, editedItem) {
         if (state.todoList) {
             let index = state.todoList.findIndex(x => x.Id === editedItem.Id);
-
             if (index >= 0) {
                 state.todoList.splice(index, 1, editedItem)
                 localStorage.setItem('todoList', JSON.stringify(state.todoList));

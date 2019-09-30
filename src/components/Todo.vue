@@ -207,7 +207,6 @@ export default {
       }
 
       this.newToDo = null;
-      //this.refreshLists();
     },
     onAddToDoItemClicked() {
       this.newToDo = {
@@ -216,8 +215,7 @@ export default {
       };
     },
     onUploadImageClicked(event) {
-      window.console.log(event);
-      /* if (!this.selectedItemForImageUpload) {
+       if (!this.selectedItemForImageUpload) {
         return;
       }
 
@@ -230,10 +228,9 @@ export default {
         reader.onload = () => {
           this.image = reader.result;
           this.selectedItemForImageUpload.Image = this.image.toString();
-          TodoService.editToDoItem(this.selectedItemForImageUpload);
-          this.refreshLists();
+          this.$store.commit(EDIT_TO_DO_ITEM, this.selectedItemForImageUpload);
         };
-      } */
+      } 
     },
     onToDoItemStatusChanged(item) {
       this.$store.commit(REMOVE_TO_DO_ITEM, item);
@@ -243,10 +240,8 @@ export default {
       this.$store.commit(EDIT_TO_DO_ITEM, item);
     },
     uploadImage(item) {
-      window.console.log(item);
-
-      /* this.selectedItemForImageUpload = item;
-      document.getElementById("imgupload").click(); */
+      this.selectedItemForImageUpload = item;
+      document.getElementById("imgupload").click();
     },
     onDeleteToDoItemClicked(item) {
       this.$store.commit(REMOVE_TO_DO_ITEM, item);
