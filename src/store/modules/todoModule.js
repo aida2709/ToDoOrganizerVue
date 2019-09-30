@@ -47,6 +47,10 @@ function getPositionForDoneItem(state) {
   return position;
 }
 
+function sortByPosition(a, b) {
+  return b.Position - a.Position;
+}
+
 const TodoModule = {
   namespaced: true,
   state: {
@@ -129,10 +133,10 @@ const TodoModule = {
   },
   getters: {
     todoList: state => {
-      return state.todoList;
+      return state.todoList.sort(sortByPosition);
     },
     doneList: state => {
-      return state.doneList;
+      return state.doneList.sort(sortByPosition);
     },
   }
 }
