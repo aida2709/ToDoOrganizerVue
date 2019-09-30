@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import AuthService from "../services/AuthService";
 import {
   LOGOUT
 } from "../store/mutation-types";

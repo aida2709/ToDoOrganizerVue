@@ -60,7 +60,6 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
-import AuthService from "../services/AuthService";
 import { LOGIN } from "../store/mutation-types";
 
 export default {
@@ -106,7 +105,7 @@ export default {
       };
       this.$store.commit(LOGIN, user);
 
-      if (this.isLogged) {
+      if (this.$store.getters.isLogged) {
         this.isError = false;
         this.$router.push({ name: "todo" });
       } else {
