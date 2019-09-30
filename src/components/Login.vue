@@ -104,7 +104,7 @@ export default {
         Password: this.password,
         RememberMe: this.rememberMe
       };
-       this.$store.commit(LOGIN, user);
+      this.$store.commit(LOGIN, user);
 
       if (this.isLogged) {
         this.isError = false;
