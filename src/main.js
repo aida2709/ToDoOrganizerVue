@@ -9,7 +9,7 @@ import Login from './components/Login'
 import Todo from './components/Todo'
 import i18n from './plugins/i18n'
 
-import { ADD_TO_DO_ITEM, ADD_DONE_ITEM, REMOVE_TO_DO_ITEM, REMOVE_DONE_ITEM, REMOVE_ALL_DONE_ITEMS, EDIT_TO_DO_ITEM } from './store/mutation-types'
+import { ADD_TO_DO_ITEM, ADD_DONE_ITEM, REMOVE_TO_DO_ITEM, REMOVE_DONE_ITEM, REMOVE_ALL_DONE_ITEMS, EDIT_TO_DO_ITEM, LOGOUT } from './store/mutation-types'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
@@ -174,6 +174,10 @@ const store = new Vuex.Store({
         }
       }
     },
+    [LOGOUT](state){
+      localStorage.removeItem('loggedUser');
+      state.loggedUser=null;
+    }
   }
 })
 

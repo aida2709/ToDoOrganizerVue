@@ -20,6 +20,9 @@
 
 <script>
 import AuthService from "../services/AuthService";
+import {
+  LOGOUT
+} from "../store/mutation-types";
 
 export default {
   name: "Toolbar",
@@ -33,7 +36,7 @@ export default {
       this.showDropdown = !this.showDropdown;
     },
     onLogoutClicked() {
-      AuthService.logout();
+      this.$store.commit(LOGOUT);
       this.$router.push({ name: "login" });
     },
     closeDropdown() {
