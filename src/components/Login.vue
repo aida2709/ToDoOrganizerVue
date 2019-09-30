@@ -60,7 +60,6 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
-import { LOGIN } from "../store/mutation-types";
 
 export default {
   name: "Login",

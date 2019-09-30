@@ -89,15 +89,6 @@ import Toolbar from "./Toolbar";
 import TodoItem from "./TodoItem";
 import DoneItem from "./DoneItem";
 import draggable from "vuedraggable";
-import {
-  ADD_TO_DO_ITEM,
-  ADD_DONE_ITEM,
-  REMOVE_ALL_DONE_ITEMS,
-  EDIT_TO_DO_ITEM,
-  TODO_MODULE,
-  UPDATE_DONE_ITEMS,
-  UPDATE_TO_DO_ITEMS
-} from "../store/mutation-types";
 
 export default {
   name: "Todo",

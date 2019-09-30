@@ -5,20 +5,16 @@
 </template>
 
 <script>
-import { AUTH_MODULE } from "./store/mutation-types";
 export default {
   name: "app",
   components: {},
   computed: {
-    isUserLogged() {
-      return this.$store.getters.isLogged;
-    },
-    isRememberMeActivated() {
-      return this.$store.getters.isRememberMeActivated;
+    isUserLoggedAndRememberMeActivated() {
+      return this.$store.getters.isLogged && this.$store.getters.isRememberMeActivated;
     }
   },
   mounted: function() {
-    if (this.isUserLogged && this.isRememberMeActivated) {
+    if (this.isUserLoggedAndRememberMeActivated) {
       if (this.$route.name !== "todo") {
         this.$router.push({ name: "todo" });
       }

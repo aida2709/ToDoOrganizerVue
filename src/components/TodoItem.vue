@@ -42,13 +42,6 @@
 </template>
 
 <script>
-import {
-  REMOVE_TO_DO_ITEM,
-  EDIT_TO_DO_ITEM,
-  ADD_DONE_ITEM,
-  TODO_MODULE
-} from "../store/mutation-types";
-
 export default {
   name: "TodoItem",
   props: ["item"],

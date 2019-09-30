@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import { LOGOUT, AUTH_MODULE } from "../store/mutation-types";
-
 export default {
   name: "Toolbar",
   data() {
