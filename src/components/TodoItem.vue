@@ -72,11 +72,11 @@ export default {
     },
     onDeleteToDoItemClicked(item) {
       //this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, item);
-
       this.$store.dispatch('DELETE_TODO_ITEM', item);
     },
     editToDo(item) {
-      this.$store.commit(TODO_MODULE + EDIT_TO_DO_ITEM, item);
+      //this.$store.commit(TODO_MODULE + EDIT_TO_DO_ITEM, item);
+      this.$store.dispatch('EDIT_TODO_ITEM', item);
     },
     onToDoItemStatusChanged(item) {
       this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, item);

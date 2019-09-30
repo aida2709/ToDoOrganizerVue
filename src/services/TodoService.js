@@ -36,6 +36,8 @@ export default {
 
         todoList.push(toDoItem);
         localStorage.setItem('todoList', JSON.stringify(todoList));
+
+        return todoList;
     },
 
     addDone(toDoItem) {
@@ -53,6 +55,8 @@ export default {
 
         doneList.push(toDoItem);
         localStorage.setItem('doneList', JSON.stringify(doneList));
+
+        return doneList;
     },
 
     removeToDoItem(toDoItem) {
@@ -154,6 +158,8 @@ export default {
                 localStorage.setItem('todoList', JSON.stringify(todoList));
             }
         }
+
+        return todoList;
     },
 
     addToDoOnSpecificPosition(toDoItem, index) {

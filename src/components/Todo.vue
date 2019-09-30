@@ -95,7 +95,7 @@ import {
   EDIT_TO_DO_ITEM,
   TODO_MODULE,
   UPDATE_DONE_ITEMS,
-  UPDATE_TO_DO_ITEMS,
+  UPDATE_TO_DO_ITEMS
 } from "../store/mutation-types";
 
 export default {
@@ -124,9 +124,11 @@ export default {
       }
 
       if (this.newToDo.IsFinished) {
-        this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, this.newToDo);
+        //this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, this.newToDo);
+        this.$store.dispatch("ADD_DONE_ITEM", this.newToDo);
       } else {
-        this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, this.newToDo);
+        //this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, this.newToDo);
+        this.$store.dispatch("ADD_TODO_ITEM", this.newToDo);
       }
 
       this.newToDo = null;
@@ -152,10 +154,15 @@ export default {
           this.image = reader.result;
           this.selectedItemForImageUpload.Image = this.image.toString();
 
-          this.$store.commit(
-            TODO_MODULE + EDIT_TO_DO_ITEM,
+          this.$store.dispatch(
+            "EDIT_TODO_ITEM",
             this.selectedItemForImageUpload
           );
+
+          /*  this.$store.commit(
+            TODO_MODULE + EDIT_TO_DO_ITEM,
+            this.selectedItemForImageUpload
+          ); */
         };
       }
     },
@@ -164,7 +171,8 @@ export default {
       document.getElementById("imgupload").click();
     },
     onDeleteAllDoneItemsClicked() {
-      this.$store.commit(TODO_MODULE + REMOVE_ALL_DONE_ITEMS);
+      this.$store.dispatch("REMOVE_ALL_DONE_ITEMS");
+      //this.$store.commit(TODO_MODULE + REMOVE_ALL_DONE_ITEMS);
     }
   },
   computed: {
@@ -184,18 +192,20 @@ export default {
     },
     todoList: {
       get() {
-        return this.$store.getters[TODO_MODULE + "todoList"];
+        return this.$store.getters.getTodoList;
       },
       set(value) {
-        this.$store.commit(TODO_MODULE + UPDATE_TO_DO_ITEMS, value);
+        this.$store.dispatch("UPDATE_TODO_LIST", value);
+        //this.$store.commit(TODO_MODULE + UPDATE_TO_DO_ITEMS, value);
       }
     },
     doneList: {
       get() {
-        return this.$store.getters[TODO_MODULE + "doneList"];
+        return this.$store.getters.getDoneList;
       },
       set(value) {
-        this.$store.commit(TODO_MODULE + UPDATE_DONE_ITEMS, value);
+        this.$store.dispatch("UPDATE_DONE_LIST", value);
+        //this.$store.commit(TODO_MODULE + UPDATE_DONE_ITEMS, value);
       }
     }
   },
