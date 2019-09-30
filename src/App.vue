@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import {AUTH_MODULE} from './store/mutation-types'
+import { AUTH_MODULE } from "./store/mutation-types";
 export default {
   name: "app",
   components: {},
   mounted: function() {
     if (
-      this.$store.getters[AUTH_MODULE+'isLogged'] &&
-      this.$store.getters[AUTH_MODULE+'isRememberMeActivated']
+      this.$store.getters[AUTH_MODULE + "isLogged"] &&
+      this.$store.getters[AUTH_MODULE + "isRememberMeActivated"]
     ) {
       if (this.$route.name !== "todo") {
         this.$router.push({ name: "todo" });

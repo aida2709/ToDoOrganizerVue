@@ -234,10 +234,10 @@ export default {
   },
   computed: {
     todoList() {
-      return this.$store.getters["todoModule/todoList"];
+      return this.$store.getters[TODO_MODULE + "todoList"];
     },
     doneList() {
-      return this.$store.getters["todoModule/doneList"];
+      return this.$store.getters[TODO_MODULE + "doneList"];
     },
     dragOptions() {
       return {
