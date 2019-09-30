@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import store from './store';
 import Vuelidate from 'vuelidate'
 import VueRouter from 'vue-router'
 
@@ -9,7 +9,6 @@ import Todo from './components/Todo'
 import i18n from './plugins/i18n'
 
 Vue.config.productionTip = false
-Vue.use(Vuex)
 Vue.use(Vuelidate)
 Vue.use(VueRouter)
 
@@ -20,16 +19,6 @@ const router = new VueRouter({
     { path: '/', name: 'login', component: Login },
     { path: '/todo', name: 'todo', component: Todo }
   ]
-})
-
-import AuthModule from './store/modules/authModule'
-import TodoModule from './store/modules/todoModule'
-
-const store = new Vuex.Store({
-  modules: {
-    authModule: AuthModule,
-    todoModule: TodoModule
-  }
 })
 
 new Vue({
