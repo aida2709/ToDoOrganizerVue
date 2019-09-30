@@ -32,6 +32,7 @@ const AuthModule = {
                 user.Username = "Username";
                 localStorage.setItem('loggedUser', JSON.stringify(user));
 
+                state.loggedUser=JSON.parse(localStorage.getItem('loggedUser'))
                 return true;
             }
             return false;
