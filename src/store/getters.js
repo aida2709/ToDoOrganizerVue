@@ -1,6 +1,4 @@
-function sortByPosition(a, b) {
-    return b.Position - a.Position;
-}
+import sortByPosition from './helper'
 
 export default {
     isLogged: state => state.loggedUser,

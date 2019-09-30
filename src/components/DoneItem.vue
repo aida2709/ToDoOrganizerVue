@@ -14,7 +14,7 @@
         <span class="checkmark checkmark-checked"></span>
       </label>
 
-      <p style="display: inline;" class="done-title">{{item.Title}}</p>
+      <p  class="done-title">{{item.Title}}</p>
 
       <button @click="onDeleteDoneItemClicked(item)" class="item-btn delete-item">
         <i class="material-icons">delete_outline</i>
@@ -70,6 +70,7 @@ input:focus {
 
 .done-title {
   color: #8b8b8b;
+  display: inline;
 }
 
 .item-btn {
