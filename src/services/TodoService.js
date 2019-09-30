@@ -24,9 +24,7 @@ export default {
     addToDo(toDoItem) {
         toDoItem.IsFinished = false;
         toDoItem.Position = this.getPositionForToDoItem();
-
-        if (!toDoItem.Id)//if item already has its id, do not update it
-            toDoItem.Id = this.getNextId();
+        toDoItem.Id = this.getNextId();
 
         let todoList = JSON.parse(localStorage.getItem('todoList'));
 
@@ -43,9 +41,7 @@ export default {
     addDone(toDoItem) {
         toDoItem.IsFinished = true;
         toDoItem.Position = this.getPositionForDoneItem();
-
-        if (!toDoItem.Id)//if item already has its id, do not update it
-            toDoItem.Id = this.getNextId();
+        toDoItem.Id = this.getNextId();
 
         let doneList = JSON.parse(localStorage.getItem('doneList'));
 
@@ -82,7 +78,7 @@ export default {
         if (doneList) {
             const index = doneList.findIndex(x => x.Id === doneItem.Id);
 
-            if (index >= 0){
+            if (index >= 0) {
                 doneList.splice(index, 1);
                 localStorage.setItem('doneList', JSON.stringify(doneList));
             }
