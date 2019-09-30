@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import 'es6-promise/auto'
 import Vuex from 'vuex'
 import Vuelidate from 'vuelidate'
 import VueRouter from 'vue-router'

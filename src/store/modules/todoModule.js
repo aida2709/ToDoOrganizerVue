@@ -1,5 +1,4 @@
-import { ADD_TO_DO_ITEM, ADD_DONE_ITEM, REMOVE_TO_DO_ITEM, REMOVE_DONE_ITEM, REMOVE_ALL_DONE_ITEMS, EDIT_TO_DO_ITEM, ADD_TO_DO_ITEM_ON_POSITION, ADD_DONE_ITEM_ON_POSITION } from '../mutation-types'
-
+import { ADD_TO_DO_ITEM, ADD_DONE_ITEM, REMOVE_TO_DO_ITEM, REMOVE_DONE_ITEM, REMOVE_ALL_DONE_ITEMS, EDIT_TO_DO_ITEM, ADD_TO_DO_ITEM_ON_POSITION, ADD_DONE_ITEM_ON_POSITION, UPDATE_TO_DO_ITEMS, UPDATE_DONE_ITEMS } from '../mutation-types'
 
 function getNextId(state) {
   let id = 1;
@@ -57,6 +56,7 @@ const TodoModule = {
     todoList: JSON.parse(localStorage.getItem('todoList')),
     doneList: JSON.parse(localStorage.getItem('doneList')),
   },
+
   mutations: {
     [ADD_TO_DO_ITEM](state, toDoItem) {
       toDoItem.IsFinished = false;
@@ -87,6 +87,9 @@ const TodoModule = {
       localStorage.setItem('doneList', JSON.stringify(state.doneList));
     },
     [REMOVE_TO_DO_ITEM](state, toDoItem) {
+      window.console.log('REMOVE TO DO ITEM');
+      window.console.log(toDoItem);
+
       if (state.todoList) {
         const index = state.todoList.findIndex(x => x.Id === toDoItem.Id);
 
@@ -96,6 +99,8 @@ const TodoModule = {
         state.todoList.splice(index, 1);
 
         localStorage.setItem('todoList', JSON.stringify(state.todoList));
+
+        state.todoList = JSON.parse(localStorage.getItem('todoList'));
       }
     },
     [REMOVE_DONE_ITEM](state, toDoItem) {
@@ -125,8 +130,8 @@ const TodoModule = {
       }
     },
     [ADD_TO_DO_ITEM_ON_POSITION](state, payload) {
-      let toDoItem=payload.toDoItem;
-      let index=payload.index;
+      let toDoItem = payload.toDoItem;
+      let index = payload.index;
 
       toDoItem.IsFinished = false;
 
@@ -156,15 +161,15 @@ const TodoModule = {
     },
     [ADD_DONE_ITEM_ON_POSITION](state, payload) {
 
-      let toDoItem=payload.toDoItem;
-      let index=payload.index;
+      let toDoItem = payload.toDoItem;
+      let index = payload.index;
 
       window.console.log(toDoItem);
       window.console.log(index);
       toDoItem.IsFinished = true;
 
 
-       if (!toDoItem.Id)//if item already has its id, do not update it
+      if (!toDoItem.Id)//if item already has its id, do not update it
         toDoItem.Id = getNextId();
 
       if (!state.doneList.length) {
@@ -186,16 +191,54 @@ const TodoModule = {
         }
       }
 
-      localStorage.setItem('doneList', JSON.stringify(state.doneList)); 
+      localStorage.setItem('doneList', JSON.stringify(state.doneList));
+    },
+    [UPDATE_TO_DO_ITEMS](state, payload) {
+      let todoItems = [];
+
+      for (let i = 0; i < payload.length; i++) {
+        let item = {
+          Id: i+1,
+          Title: payload[i].Title,
+          Position: payload.length - i,
+          IsFinished: false
+        }
+
+        todoItems.push(item);
+      }
+
+      window.console.log(todoItems);
+
+      localStorage.setItem('todoList', JSON.stringify(todoItems));
+      state.todoItems = todoItems.sort(sortByPosition);
+    },
+    [UPDATE_DONE_ITEMS](state, payload) {
+      let doneItems = [];
+
+      for (let i = 0; i < payload.length; i++) {
+        let item = {
+          Id: i+1,
+          Title: payload[i].Title,
+          Position: payload.length - i,
+          IsFinished: true
+        }
+
+        doneItems.push(item);
+      }
+
+      window.console.log(doneItems);
+
+      localStorage.setItem('doneList', JSON.stringify(doneItems));
+      state.doneList = doneItems.sort(sortByPosition);
     }
   },
 
   getters: {
     todoList: state => {
-      return state.todoList.sort(sortByPosition);
+      return state.todoList ? state.todoList.sort(sortByPosition) : [];
     },
     doneList: state => {
-      return state.doneList.sort(sortByPosition);
+      return state.doneList ? state.doneList.sort(sortByPosition) : [];
     },
   }
 }

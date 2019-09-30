@@ -6,21 +6,9 @@ const AuthModule = {
         loggedUser: JSON.parse(localStorage.getItem('loggedUser')),
     },
     getters: {
-        isLogged: state => {
-            if (state.loggedUser)
-                return true;
-
-            return false;
-        },
-        isRememberMeActivated: state => {
-            if (state.loggedUser && state.loggedUser.RememberMe)
-                return true;
-
-            return false;
-        },
-        getUsername: state => {
-            return state.loggedUser ? state.loggedUser.Username : '';
-        }
+        isLogged: state => state.loggedUser,
+        isRememberMeActivated: state => state.loggedUser && state.loggedUser.RememberMe,
+        getUsername: state => state.loggedUser ? state.loggedUser.Username : '',
     },
     mutations: {
         [LOGOUT](state) {

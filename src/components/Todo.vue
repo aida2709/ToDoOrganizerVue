@@ -51,12 +51,14 @@
             @change="onUploadImageClicked($event)"
           />
 
-          <TodoItem
-            :item="item"
-            @upload-image="uploadImage"
-            :key="item.Id"
-            v-for="item in todoList"
-          />
+          <draggable v-model="todoList" @start="drag=true" @end="drag=false" v-bind="dragOptions">
+            <TodoItem
+              :item="item"
+              @upload-image="uploadImage"
+              :key="item.Id"
+              v-for="item in todoList"
+            />
+          </draggable>
         </div>
       </div>
 
@@ -72,7 +74,9 @@
         <hr />
 
         <div class="card-container">
-          <DoneItem :item="item" :key="item.Id" v-for="item in doneList" />
+          <draggable element="div" v-model="doneList" v-bind="dragOptions">
+            <DoneItem :item="item" :key="item.Id" v-for="item in doneList" />
+          </draggable>
         </div>
       </div>
     </div>
@@ -83,22 +87,20 @@
 import Toolbar from "./Toolbar";
 import TodoItem from "./TodoItem";
 import DoneItem from "./DoneItem";
-/* import draggable from "vuedraggable"; */
+import draggable from "vuedraggable";
 import {
   ADD_TO_DO_ITEM,
   ADD_DONE_ITEM,
   REMOVE_ALL_DONE_ITEMS,
   EDIT_TO_DO_ITEM,
   TODO_MODULE,
-  REMOVE_TO_DO_ITEM,
-  REMOVE_DONE_ITEM,
-  ADD_DONE_ITEM_ON_POSITION,
-  ADD_TO_DO_ITEM_ON_POSITION
+  UPDATE_DONE_ITEMS,
+  UPDATE_TO_DO_ITEMS,
 } from "../store/mutation-types";
 
 export default {
   name: "Todo",
-  components: { Toolbar, TodoItem, DoneItem },
+  components: { Toolbar, TodoItem, DoneItem, draggable },
   data() {
     return {
       newToDo: null,
@@ -106,82 +108,11 @@ export default {
       image: "",
       editable: true,
       isDragging: false,
+      drag: false,
       delayedDragging: false
     };
   },
   methods: {
-    onMove({ relatedContext, draggedContext }) {
-      const relatedElement = relatedContext.element;
-      const draggedElement = draggedContext.element;
-
-      let listElement = {
-        Id: draggedElement.Id,
-        Title: draggedElement.Title,
-        Position: draggedElement.Position,
-        IsFinished: draggedElement.IsFinished,
-        Image: draggedElement.Image
-      };
-
-      //if dragging is in the same list
-      if (
-        relatedElement &&
-        relatedElement.IsFinished === draggedElement.IsFinished
-      ) {
-        if (draggedElement.IsFinished) {
-          this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
-          this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
-
-          this.$store.commit(TODO_MODULE + ADD_DONE_ITEM_ON_POSITION, {
-            toDoItem: listElement,
-            index: draggedContext.futureIndex
-          });
-        } else {
-          this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
-          this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
-          this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM_ON_POSITION, {
-            toDoItem: listElement,
-            index: draggedContext.futureIndex
-          });
-        }
-      } else {
-        if (!relatedElement) {
-          //if list to drag element is empty
-          if (draggedElement.IsFinished) {
-            this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
-            this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, listElement);
-          } else {
-            this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
-            this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, listElement);
-          }
-        } else {
-          if (!draggedElement.IsFinished) {
-            this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
-            //this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
-            listElement.IsFinished = true;
-
-            window.console.log("ovdje");
-
-            /* this.$store.commit(TODO_MODULE + ADD_DONE_ITEM_ON_POSITION, {
-              toDoItem: listElement,
-              index: draggedContext.futureIndex
-            });  */
-          } else {
-            this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
-            this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
-
-            listElement.IsFinished = false;
-
-            this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM_ON_POSITION, {
-              toDoItem: listElement,
-              index: draggedContext.futureIndex
-            });
-          }
-        }
-      }
-      return (
-        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-      );
-    },
     addToDo() {
       if (
         !this.newToDo ||
@@ -237,12 +168,12 @@ export default {
     }
   },
   computed: {
-    todoList() {
+    /* todoList() {
       return this.$store.getters[TODO_MODULE + "todoList"];
     },
     doneList() {
       return this.$store.getters[TODO_MODULE + "doneList"];
-    },
+    }, */
     dragOptions() {
       return {
         animation: 0,
@@ -250,6 +181,22 @@ export default {
         disabled: !this.editable,
         ghostClass: "ghost"
       };
+    },
+    todoList: {
+      get() {
+        return this.$store.getters[TODO_MODULE + "todoList"];
+      },
+      set(value) {
+        this.$store.commit(TODO_MODULE + UPDATE_TO_DO_ITEMS, value);
+      }
+    },
+    doneList: {
+      get() {
+        return this.$store.getters[TODO_MODULE + "doneList"];
+      },
+      set(value) {
+        this.$store.commit(TODO_MODULE + UPDATE_DONE_ITEMS, value);
+      }
     }
   },
   watch: {
