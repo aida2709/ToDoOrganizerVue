@@ -51,16 +51,7 @@
             @change="onUploadImageClicked($event)"
           />
 
-          <draggable
-            class="list-group"
-            tag="div"
-            v-model="todoList"
-            v-bind="dragOptions"
-            :move="onMove"
-            @start="isDragging=true"
-            @end="isDragging=false"
-          >
-            <transition-group type="transition" :name="'flip-list'">
+         
               <div class="main-card" :key="item.Id" v-for="item in todoList">
                 <TodoItem
                   :item="item"
@@ -70,8 +61,7 @@
                   @status-changed="onToDoItemStatusChanged"
                 />
               </div>
-            </transition-group>
-          </draggable>
+            
         </div>
       </div>
 
@@ -87,8 +77,6 @@
         <hr />
 
         <div class="card-container">
-          <draggable element="div" v-model="doneList" v-bind="dragOptions" :move="onMove">
-            <transition-group name="no" class="list-group" tag="div">
               <div class="main-card" :key="item.Id" v-for="item in doneList">
                 <DoneItem
                   :item="item"
@@ -96,8 +84,6 @@
                   @delete-item="onDeleteDoneItemClicked"
                 />
               </div>
-            </transition-group>
-          </draggable>
         </div>
       </div>
     </div>
@@ -109,11 +95,13 @@ import Toolbar from "./Toolbar";
 import TodoService from "../services/ToDoService";
 import TodoItem from "./TodoItem";
 import DoneItem from "./DoneItem";
-import draggable from "vuedraggable";
+/* import draggable from "vuedraggable"; */
+import { ADD_TO_DO_ITEM, ADD_DONE_ITEM } from '../store/mutation-types'
+
 
 export default {
   name: "Todo",
-  components: { Toolbar, TodoItem, DoneItem, draggable },
+  components: { Toolbar, TodoItem, DoneItem },
   data() {
     return {
       newToDo: null,
@@ -199,7 +187,7 @@ export default {
       );
     },
     addToDo() {
-      /* if (
+       if (
         !this.newToDo ||
         !this.newToDo.Title ||
         this.newToDo.Title.trim() === ""
@@ -209,19 +197,22 @@ export default {
       }
 
       if (this.newToDo.IsFinished) {
-        TodoService.addDone(this.newToDo);
+        //TodoService.addDone(this.newToDo);
+        this.$store.commit(ADD_DONE_ITEM,this.newToDo);
+
       } else {
-        TodoService.addToDo(this.newToDo);
+        //TodoService.addToDo(this.newToDo);
+        this.$store.commit(ADD_TO_DO_ITEM,this.newToDo);
       }
 
       this.newToDo = null;
-      this.refreshLists(); */
+      //this.refreshLists(); 
     },
     onAddToDoItemClicked() {
-      /* this.newToDo = {
+       this.newToDo = {
         Title: "",
         IsFinished: false
-      }; */
+      };
     },
     onUploadImageClicked(event) {
       window.console.log(event);

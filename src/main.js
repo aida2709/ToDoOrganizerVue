@@ -9,6 +9,8 @@ import Login from './components/Login'
 import Todo from './components/Todo'
 import i18n from './plugins/i18n'
 
+import { ADD_TO_DO_ITEM, ADD_DONE_ITEM} from './store/mutation-types'
+
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(Vuelidate)
@@ -35,6 +37,80 @@ const store = new Vuex.Store({
     },
     doneList: state => {
       return state.doneList;
+    },
+    getNextId: state=> {
+      let id = 1;
+
+      if (state.todoList) {
+        state.todoList.map(function (obj) {
+          if (obj.Id >= id)
+            id = obj.Id + 1;
+        });
+      }
+
+      if (state.doneList) {
+        state.doneList.map(function (obj) {
+          if (obj.Id >= id)
+            id = obj.Id + 1;
+        });
+      }
+
+      return id;
+    },
+
+    getPositionForToDoItem:state=> {
+      let position = 1;
+
+      if (state.todoList) {
+        state.todoList.map(function (obj) {
+          if (obj.Position >= position)
+            position = obj.Position + 1;
+        });
+      }
+
+      return position;
+    },
+    getPositionForDoneItem: state=>{
+      let position = 1;
+
+      if (state.doneList) {
+        state.doneList.map(function (obj) {
+          if (obj.Position >= position)
+            position = obj.Position + 1;
+        });
+      }
+
+      return position;
+    }
+  },
+  mutations: {
+    [ADD_TO_DO_ITEM](state, toDoItem) {
+      toDoItem.IsFinished = false;
+      toDoItem.Position = state.getPositionForToDoItem;
+
+      if (!toDoItem.Id)//if item already has its id, do not update it
+        toDoItem.Id = state.getNextId;
+
+      if (!state.todoList) {
+        state.todoList = [];
+      }
+
+      state.todoList.push(toDoItem);
+      localStorage.setItem('todoList', JSON.stringify(state.todoList));
+    },
+    [ADD_DONE_ITEM](state, toDoItem) {
+      toDoItem.IsFinished = true;
+      toDoItem.Position = state.getPositionForToDoItem;
+
+      if (!toDoItem.Id)//if item already has its id, do not update it
+        toDoItem.Id = state.getNextId;
+
+      if (!state.doneList) {
+        state.doneList = [];
+      }
+
+      state.doneList.push(toDoItem);
+      localStorage.setItem('doneList', JSON.stringify(state.doneList));
     }
   }
 })
