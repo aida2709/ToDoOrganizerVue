@@ -9,7 +9,7 @@ password: <b>test </b>
 
  ## Motivation
  
- This application helps people to organize their tasks and makes it easier to monitor the work progress.
+ This application helps people to organize their tasks and makes it easier to monitor work progress.
 
  ## Features
  Users can upload an preview images for each todo item. Also, todo item can be removed with delete option. Once when todo item is finished, by clicking on checkbox it can be moved to done list. Ofcourse, user can even move done items to todo items if they need to be edited for some reason. All these functionalities can be done with drag and drop option too.
