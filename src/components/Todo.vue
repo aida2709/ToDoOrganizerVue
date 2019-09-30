@@ -87,7 +87,8 @@ import {
   ADD_TO_DO_ITEM,
   ADD_DONE_ITEM,
   REMOVE_ALL_DONE_ITEMS,
-  EDIT_TO_DO_ITEM
+  EDIT_TO_DO_ITEM,
+  TODO_MODULE
 } from "../store/mutation-types";
 
 export default {
@@ -188,9 +189,9 @@ export default {
       }
 
       if (this.newToDo.IsFinished) {
-        this.$store.commit("todoModule/" + ADD_DONE_ITEM, this.newToDo);
+        this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, this.newToDo);
       } else {
-        this.$store.commit("todoModule/" + ADD_TO_DO_ITEM, this.newToDo);
+        this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, this.newToDo);
       }
 
       this.newToDo = null;
@@ -217,7 +218,7 @@ export default {
           this.selectedItemForImageUpload.Image = this.image.toString();
 
           this.$store.commit(
-            "todoModule/" + EDIT_TO_DO_ITEM,
+            TODO_MODULE + EDIT_TO_DO_ITEM,
             this.selectedItemForImageUpload
           );
         };
@@ -228,7 +229,7 @@ export default {
       document.getElementById("imgupload").click();
     },
     onDeleteAllDoneItemsClicked() {
-      this.$store.commit("todoModule/" + REMOVE_ALL_DONE_ITEMS);
+      this.$store.commit(TODO_MODULE + REMOVE_ALL_DONE_ITEMS);
     }
   },
   computed: {

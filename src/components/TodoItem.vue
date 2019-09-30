@@ -45,7 +45,8 @@
 import {
   REMOVE_TO_DO_ITEM,
   EDIT_TO_DO_ITEM,
-  ADD_DONE_ITEM
+  ADD_DONE_ITEM,
+  TODO_MODULE
 } from "../store/mutation-types";
 export default {
   name: "TodoItem",
@@ -69,14 +70,14 @@ export default {
       }
     },
     onDeleteToDoItemClicked(item) {
-      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
+      this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, item);
     },
     editToDo(item) {
-      this.$store.commit("todoModule/" + EDIT_TO_DO_ITEM, item);
+      this.$store.commit(TODO_MODULE + EDIT_TO_DO_ITEM, item);
     },
     onToDoItemStatusChanged(item) {
-      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
-      this.$store.commit("todoModule/" + ADD_DONE_ITEM, item);
+      this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, item);
+      this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, item);
     }
   },
   created() {

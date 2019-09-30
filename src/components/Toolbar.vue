@@ -20,7 +20,8 @@
 
 <script>
 import {
-  LOGOUT
+  LOGOUT,
+  AUTH_MODULE
 } from "../store/mutation-types";
 
 export default {
@@ -35,7 +36,7 @@ export default {
       this.showDropdown = !this.showDropdown;
     },
     onLogoutClicked() {
-      this.$store.commit('authModule/'+LOGOUT);
+      this.$store.commit(AUTH_MODULE+LOGOUT);
       this.$router.push({ name: "login" });
     },
     closeDropdown() {

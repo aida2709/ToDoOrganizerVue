@@ -7,3 +7,7 @@ export const EDIT_TO_DO_ITEM = 'editTodoItem'
 export const LOGOUT = 'logout'
 export const LOGIN = 'login'
 
+export const TODO_MODULE = 'todoModule/'
+export const AUTH_MODULE = 'authModule/'
+
+
