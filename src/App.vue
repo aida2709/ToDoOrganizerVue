@@ -10,8 +10,8 @@ export default {
   components: {},
   mounted: function() {
     if (
-      this.$store.getters.isLogged &&
-      this.$store.getters.isRememberMeActivated
+      this.$store.getters['authModule/isLogged'] &&
+      this.$store.getters['authModule/isRememberMeActivated']
     ) {
       if (this.$route.name !== "todo") {
         this.$router.push({ name: "todo" });

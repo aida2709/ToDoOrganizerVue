@@ -152,7 +152,7 @@ const TodoModule = {
     }
   },
   getters: {
-    todoList : state=> {
+    todoList: state => {
       return state.todoList;
     },
     doneList: state => {
@@ -161,10 +161,8 @@ const TodoModule = {
   }
 }
 
-const store = new Vuex.Store({
-  modules: {
-    todoModule: TodoModule
-  },
+const AuthModule = {
+  namespaced: true,
   state: {
     loggedUser: JSON.parse(localStorage.getItem('loggedUser')),
   },
@@ -192,13 +190,20 @@ const store = new Vuex.Store({
     },
     [LOGIN](state, user) {
       if (user.Email === "test@test.com" && user.Password === "test") {
-
+        user.Username = "Username";
         localStorage.setItem('loggedUser', JSON.stringify(user));
 
         return true;
       }
       return false;
     }
+  }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    authModule: AuthModule,
+    todoModule: TodoModule
   }
 })
 

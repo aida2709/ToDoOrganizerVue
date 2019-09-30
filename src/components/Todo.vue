@@ -200,13 +200,9 @@ export default {
       }
 
       if (this.newToDo.IsFinished) {
-        //this.$store.commit(ADD_DONE_ITEM, this.newToDo);
-        this.$store.commit('todoModule/addDoneItem', this.newToDo);
-
+        this.$store.commit("todoModule/" + ADD_DONE_ITEM, this.newToDo);
       } else {
-        /* this.$store.commit(ADD_TO_DO_ITEM, this.newToDo); */
-        this.$store.commit('todoModule/addTodoItem', this.newToDo);
-
+        this.$store.commit("todoModule/" + ADD_TO_DO_ITEM, this.newToDo);
       }
 
       this.newToDo = null;
@@ -218,7 +214,7 @@ export default {
       };
     },
     onUploadImageClicked(event) {
-       if (!this.selectedItemForImageUpload) {
+      if (!this.selectedItemForImageUpload) {
         return;
       }
 
@@ -231,53 +227,45 @@ export default {
         reader.onload = () => {
           this.image = reader.result;
           this.selectedItemForImageUpload.Image = this.image.toString();
-          
-          this.$store.commit('todoModule/editTodoItem', this.selectedItemForImageUpload);
-          //this.$store.commit(EDIT_TO_DO_ITEM, this.selectedItemForImageUpload);
+
+          this.$store.commit(
+            "todoModule/" + EDIT_TO_DO_ITEM,
+            this.selectedItemForImageUpload
+          );
         };
-      } 
+      }
     },
     onToDoItemStatusChanged(item) {
-      /* this.$store.commit(REMOVE_TO_DO_ITEM, item); */
-      this.$store.commit('todoModule/removeTodoItem', item);
-
-      /* this.$store.commit(ADD_DONE_ITEM, item); */
-      this.$store.commit('todoModule/addDoneItem', item);
+      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
+      this.$store.commit("todoModule/" + ADD_DONE_ITEM, item);
     },
     editToDo(item) {
-      /* this.$store.commit(EDIT_TO_DO_ITEM, item); */
-      this.$store.commit('todoModule/editTodoItem', item);
+      this.$store.commit("todoModule/" + EDIT_TO_DO_ITEM, item);
     },
     uploadImage(item) {
       this.selectedItemForImageUpload = item;
       document.getElementById("imgupload").click();
     },
     onDeleteToDoItemClicked(item) {
-     /*  this.$store.commit(REMOVE_TO_DO_ITEM, item); */
-      this.$store.commit('todoModule/removeTodoItem', item);
+      this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
     },
     onDeleteAllDoneItemsClicked() {
-      //this.$store.commit(REMOVE_ALL_DONE_ITEMS);
-      this.$store.commit('todoModule/removeAllDoneItems');
+      this.$store.commit("todoModule/" + REMOVE_ALL_DONE_ITEMS);
     },
     onDoneItemStatusChanged(item) {
-      /* this.$store.commit(REMOVE_DONE_ITEM, item); */
-      this.$store.commit('todoModule/removeDoneItem', item);
-
-      /* this.$store.commit(ADD_TO_DO_ITEM, item); */
-       this.$store.commit('todoModule/addTodoItem', item);
+      this.$store.commit("todoModule/" + REMOVE_DONE_ITEM, item);
+      this.$store.commit("todoModule/" + ADD_TO_DO_ITEM, item);
     },
     onDeleteDoneItemClicked(item) {
-      /* this.$store.commit(REMOVE_DONE_ITEM, item); */
-       this.$store.commit('todoModule/removeDoneItem', item);
+      this.$store.commit("todoModule/" + REMOVE_DONE_ITEM, item);
     }
   },
   computed: {
     todoList() {
-      return this.$store.getters['todoModule/todoList'];
+      return this.$store.getters["todoModule/todoList"];
     },
     doneList() {
-      return this.$store.getters['todoModule/doneList'];
+      return this.$store.getters["todoModule/doneList"];
     },
     dragOptions() {
       return {
