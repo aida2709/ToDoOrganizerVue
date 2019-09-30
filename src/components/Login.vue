@@ -46,10 +46,7 @@
             </label>
           </div>
           <div class="col m--align-right m-login__form-right">
-            <span
-              id="m_login_forget_password"
-              class="m-link"
-            >{{ $t('_FORGET_PASSWORD') }}</span>
+            <span id="m_login_forget_password" class="m-link">{{ $t('_FORGET_PASSWORD') }}</span>
           </div>
         </div>
 
@@ -64,6 +61,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import AuthService from "../services/AuthService";
+import { LOGIN } from "../store/mutation-types";
 
 export default {
   name: "Login",
@@ -81,6 +79,7 @@ export default {
     email: { required },
     password: { required }
   },
+
   methods: {
     toggle() {
       this.showPassword = !this.showPassword;
@@ -91,6 +90,7 @@ export default {
         document.getElementById("passwordId").setAttribute("type", "password");
       }
     },
+
     onSignInClicked(e) {
       e.preventDefault();
       this.submitted = true;
@@ -99,18 +99,24 @@ export default {
         return;
       }
 
-      let result = AuthService.login(
-        this.email,
-        this.password,
-        this.rememberMe
-      );
+      const user = {
+        Email: this.email,
+        Password: this.password,
+        RememberMe: this.rememberMe
+      };
+       this.$store.commit(LOGIN, user);
 
-      if (result) {
+      if (this.isLogged) {
         this.isError = false;
         this.$router.push({ name: "todo" });
       } else {
         this.isError = true;
       }
+    }
+  },
+  computed: {
+    isLogged() {
+      return this.$store.getters.isLogged;
     }
   }
 };
@@ -215,7 +221,7 @@ input {
   text-align: right;
 }
 
-#m_login_forget_password{
+#m_login_forget_password {
   cursor: pointer;
 }
 

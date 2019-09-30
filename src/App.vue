@@ -17,6 +17,14 @@ export default {
     } else if (this.$route.name !== "login") {
       this.$router.push({ name: "login" });
     }
+  },
+  computed: {
+    isLogged() {
+      return this.$store.getters.isLogged;
+    },
+    isRememberMeActivated() {
+      return this.$store.getters.isRememberMeActivated;
+    }
   }
 };
 </script>
