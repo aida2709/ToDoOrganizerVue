@@ -13,4 +13,7 @@ export default {
     LOGOUT: (state) => {
         Vue.set(state, 'loggedUser', null);
     },
+    UPDATE_TODO_LIST_WITH_IMAGES: (state) => {
+        state.todoList = JSON.parse(localStorage.getItem('todoList'));
+    },
 }

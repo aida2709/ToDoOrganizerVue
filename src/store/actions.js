@@ -22,6 +22,10 @@ export default {
         let response = TodoService.editToDoItem(payload);
         commit('UPDATE_TODO_LIST', response);
     },
+    EDIT_TODO_ITEM_WITH_IMAGE: ({ commit }, payload) => {
+        TodoService.editToDoItem(payload);
+        commit('UPDATE_TODO_LIST_WITH_IMAGES');
+    },
     UPDATE_TODO_LIST: ({ commit }, payload) => {
         commit('UPDATE_TODO_LIST', payload);
     },

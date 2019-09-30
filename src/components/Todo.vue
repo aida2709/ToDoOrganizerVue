@@ -153,7 +153,7 @@ export default {
           this.selectedItemForImageUpload.Image = this.image.toString();
 
           this.$store.dispatch(
-            "EDIT_TODO_ITEM",
+            "EDIT_TODO_ITEM_WITH_IMAGE",
             this.selectedItemForImageUpload
           );
         };
