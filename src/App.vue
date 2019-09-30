@@ -9,11 +9,16 @@ import { AUTH_MODULE } from "./store/mutation-types";
 export default {
   name: "app",
   components: {},
+  computed: {
+    isUserLogged() {
+      return this.$store.getters.isLogged;
+    },
+    isRememberMeActivated() {
+      return this.$store.getters.isRememberMeActivated;
+    }
+  },
   mounted: function() {
-    if (
-      this.$store.getters[AUTH_MODULE + "isLogged"] &&
-      this.$store.getters[AUTH_MODULE + "isRememberMeActivated"]
-    ) {
+    if (this.isUserLogged && this.isRememberMeActivated) {
       if (this.$route.name !== "todo") {
         this.$router.push({ name: "todo" });
       }
