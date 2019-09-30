@@ -52,10 +52,7 @@
           />
 
           <div class="main-card" :key="item.Id" v-for="item in todoList">
-            <TodoItem
-              :item="item"
-              @upload-image="uploadImage"
-            />
+            <TodoItem :item="item" @upload-image="uploadImage" />
           </div>
         </div>
       </div>
@@ -73,11 +70,7 @@
 
         <div class="card-container">
           <div class="main-card" :key="item.Id" v-for="item in doneList">
-            <DoneItem
-              :item="item"
-              @status-changed="onDoneItemStatusChanged"
-              @delete-item="onDeleteDoneItemClicked"
-            />
+            <DoneItem :item="item" />
           </div>
         </div>
       </div>
@@ -93,7 +86,6 @@ import DoneItem from "./DoneItem";
 import {
   ADD_TO_DO_ITEM,
   ADD_DONE_ITEM,
-  REMOVE_DONE_ITEM,
   REMOVE_ALL_DONE_ITEMS,
   EDIT_TO_DO_ITEM
 } from "../store/mutation-types";
@@ -237,13 +229,6 @@ export default {
     },
     onDeleteAllDoneItemsClicked() {
       this.$store.commit("todoModule/" + REMOVE_ALL_DONE_ITEMS);
-    },
-    onDoneItemStatusChanged(item) {
-      this.$store.commit("todoModule/" + REMOVE_DONE_ITEM, item);
-      this.$store.commit("todoModule/" + ADD_TO_DO_ITEM, item);
-    },
-    onDeleteDoneItemClicked(item) {
-      this.$store.commit("todoModule/" + REMOVE_DONE_ITEM, item);
     }
   },
   computed: {

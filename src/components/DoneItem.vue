@@ -9,26 +9,35 @@
           name="title"
           :value="item.IsFinished"
           v-model="item.IsFinished"
-          @change="$emit('status-changed',item)"
+          @change="onDoneItemStatusChanged(item)"
         />
         <span class="checkmark checkmark-checked"></span>
       </label>
 
       <p style="display: inline;" class="done-title">{{item.Title}}</p>
 
-      <button @click="$emit('delete-item',item)" class="item-btn delete-item">
-          <i class="material-icons">delete_outline</i>
+      <button @click="onDeleteDoneItemClicked(item)" class="item-btn delete-item">
+        <i class="material-icons">delete_outline</i>
       </button>
-
-
     </div>
   </div>
 </template>
 
 <script>
+import { ADD_TO_DO_ITEM, REMOVE_DONE_ITEM } from "../store/mutation-types";
+
 export default {
   name: "DoneItem",
-  props: ["item"]
+  props: ["item"],
+  methods: {
+    onDoneItemStatusChanged(item) {
+      this.$store.commit("todoModule/" + REMOVE_DONE_ITEM, item);
+      this.$store.commit("todoModule/" + ADD_TO_DO_ITEM, item);
+    },
+    onDeleteDoneItemClicked(item) {
+      this.$store.commit("todoModule/" + REMOVE_DONE_ITEM, item);
+    }
+  }
 };
 </script>
 
@@ -140,7 +149,7 @@ input:focus {
 /*END Checkbox*/
 
 .delete-item {
- color: #7f7f7f;
+  color: #7f7f7f;
 }
 
 .todo-title {
@@ -175,15 +184,14 @@ input:focus {
   }
 }
 
-@media (max-width:1400px) {
-  .material-icons{
-    font-size:20px!important;
+@media (max-width: 1400px) {
+  .material-icons {
+    font-size: 20px !important;
   }
 
-  .item-btn{
+  .item-btn {
     margin-top: -2px;
   }
-
 }
 
 @media (max-width: 1215px) and (min-width: 880px) {

@@ -42,7 +42,11 @@
 </template>
 
 <script>
-import { REMOVE_TO_DO_ITEM,EDIT_TO_DO_ITEM, ADD_DONE_ITEM } from "../store/mutation-types";
+import {
+  REMOVE_TO_DO_ITEM,
+  EDIT_TO_DO_ITEM,
+  ADD_DONE_ITEM
+} from "../store/mutation-types";
 export default {
   name: "TodoItem",
   props: ["item"],
@@ -73,7 +77,7 @@ export default {
     onToDoItemStatusChanged(item) {
       this.$store.commit("todoModule/" + REMOVE_TO_DO_ITEM, item);
       this.$store.commit("todoModule/" + ADD_DONE_ITEM, item);
-    },
+    }
   },
   created() {
     document.addEventListener("click", this.documentClick);
