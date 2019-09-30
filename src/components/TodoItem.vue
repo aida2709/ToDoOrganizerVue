@@ -79,8 +79,7 @@ export default {
       this.$store.dispatch('EDIT_TODO_ITEM', item);
     },
     onToDoItemStatusChanged(item) {
-      this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, item);
-      this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, item);
+      this.$store.dispatch('TODO_ITEM_STATUS_CHANGED', item);
     }
   },
   created() {
