@@ -76,6 +76,8 @@ const store = new Vuex.Store({
   state: {
     todoList: JSON.parse(localStorage.getItem('todoList')),
     doneList: JSON.parse(localStorage.getItem('doneList')),
+    loggedUser: JSON.parse(localStorage.getItem('loggedUser')),
+
   },
   getters: {
     todoList: state => {
@@ -83,6 +85,21 @@ const store = new Vuex.Store({
     },
     doneList: state => {
       return state.doneList;
+    },
+    isLogged: state => {
+      if (state.loggedUser)
+        return true;
+
+      return false;
+    },
+    isRememberMeActivated: state => {
+      if (state.loggedUser && state.loggedUser.RememberMe)
+        return true;
+
+      return false;
+    },
+    getUsername: state => {
+      return state.loggedUser ? state.loggedUser.Username : '';
     }
   },
   mutations: {
@@ -144,18 +161,18 @@ const store = new Vuex.Store({
 
       return false;
     },
-    [REMOVE_ALL_DONE_ITEMS](state){
+    [REMOVE_ALL_DONE_ITEMS](state) {
       localStorage.removeItem('doneList');
-      state.doneList=[];
+      state.doneList = [];
     },
     [EDIT_TO_DO_ITEM](state, editedItem) {
-        if (state.todoList) {
-            let index = state.todoList.findIndex(x => x.Id === editedItem.Id);
-            if (index >= 0) {
-                state.todoList.splice(index, 1, editedItem)
-                localStorage.setItem('todoList', JSON.stringify(state.todoList));
-            }
+      if (state.todoList) {
+        let index = state.todoList.findIndex(x => x.Id === editedItem.Id);
+        if (index >= 0) {
+          state.todoList.splice(index, 1, editedItem)
+          localStorage.setItem('todoList', JSON.stringify(state.todoList));
         }
+      }
     },
   }
 })

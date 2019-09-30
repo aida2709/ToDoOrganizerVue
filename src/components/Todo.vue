@@ -90,7 +90,6 @@
 
 <script>
 import Toolbar from "./Toolbar";
-import TodoService from "../services/ToDoService";
 import TodoItem from "./TodoItem";
 import DoneItem from "./DoneItem";
 /* import draggable from "vuedraggable"; */
