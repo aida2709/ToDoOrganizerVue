@@ -88,7 +88,11 @@ import {
   ADD_DONE_ITEM,
   REMOVE_ALL_DONE_ITEMS,
   EDIT_TO_DO_ITEM,
-  TODO_MODULE
+  TODO_MODULE,
+  REMOVE_TO_DO_ITEM,
+  REMOVE_DONE_ITEM,
+  ADD_DONE_ITEM_ON_POSITION,
+  ADD_TO_DO_ITEM_ON_POSITION
 } from "../store/mutation-types";
 
 export default {
@@ -109,7 +113,7 @@ export default {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
 
-      /* let listElement = {
+      let listElement = {
         Id: draggedElement.Id,
         Title: draggedElement.Title,
         Position: draggedElement.Position,
@@ -123,57 +127,56 @@ export default {
         relatedElement.IsFinished === draggedElement.IsFinished
       ) {
         if (draggedElement.IsFinished) {
-          TodoService.removeDoneItem(listElement);
-          TodoService.removeToDoItem(listElement);
+          this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
+          this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
 
-          TodoService.addDoneItemOnSpecificPosition(
-            listElement,
-            draggedContext.futureIndex
-          );
+          this.$store.commit(TODO_MODULE + ADD_DONE_ITEM_ON_POSITION, {
+            toDoItem: listElement,
+            index: draggedContext.futureIndex
+          });
         } else {
-          TodoService.removeToDoItem(listElement);
-          TodoService.removeDoneItem(listElement);
-
-          TodoService.addToDoOnSpecificPosition(
-            listElement,
-            draggedContext.futureIndex
-          );
+          this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
+          this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
+          this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM_ON_POSITION, {
+            toDoItem: listElement,
+            index: draggedContext.futureIndex
+          });
         }
       } else {
         if (!relatedElement) {
           //if list to drag element is empty
           if (draggedElement.IsFinished) {
-            TodoService.removeDoneItem(listElement);
-            TodoService.addToDo(listElement);
+            this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
+            this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, listElement);
           } else {
-            TodoService.removeToDoItem(listElement);
-            TodoService.addDone(listElement);
+            this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
+            this.$store.commit(TODO_MODULE + ADD_DONE_ITEM, listElement);
           }
         } else {
           if (!draggedElement.IsFinished) {
-            TodoService.removeToDoItem(listElement);
-            TodoService.removeDoneItem(listElement);
-
+            this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
+            //this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
             listElement.IsFinished = true;
 
-            TodoService.addDoneItemOnSpecificPosition(
-              listElement,
-              draggedContext.futureIndex
-            );
+            window.console.log("ovdje");
+
+            /* this.$store.commit(TODO_MODULE + ADD_DONE_ITEM_ON_POSITION, {
+              toDoItem: listElement,
+              index: draggedContext.futureIndex
+            });  */
           } else {
-            TodoService.removeDoneItem(listElement);
-            TodoService.removeToDoItem(listElement);
+            this.$store.commit(TODO_MODULE + REMOVE_TO_DO_ITEM, listElement);
+            this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, listElement);
 
             listElement.IsFinished = false;
 
-            TodoService.addToDoOnSpecificPosition(
-              listElement,
-              draggedContext.futureIndex
-            );
+            this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM_ON_POSITION, {
+              toDoItem: listElement,
+              index: draggedContext.futureIndex
+            });
           }
         }
-      } */
-
+      }
       return (
         (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
       );
