@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-card">
     <img v-if="item.Image" :src="item.Image" class="todo-item-image" />
 
     <div class="card">

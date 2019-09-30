@@ -51,9 +51,12 @@
             @change="onUploadImageClicked($event)"
           />
 
-          <div class="main-card" :key="item.Id" v-for="item in todoList">
-            <TodoItem :item="item" @upload-image="uploadImage" />
-          </div>
+          <TodoItem
+            :item="item"
+            @upload-image="uploadImage"
+            :key="item.Id"
+            v-for="item in todoList"
+          />
         </div>
       </div>
 
@@ -69,9 +72,7 @@
         <hr />
 
         <div class="card-container">
-          <div class="main-card" :key="item.Id" v-for="item in doneList">
-            <DoneItem :item="item" />
-          </div>
+          <DoneItem :item="item" :key="item.Id" v-for="item in doneList" />
         </div>
       </div>
     </div>
