@@ -14,6 +14,10 @@ export default {
         let response = TodoService.removeToDoItem(payload);
         commit('UPDATE_TODO_LIST', response);
     },
+    DELETE_DONE_ITEM: ({ commit }, payload) => {
+        let response = TodoService.removeDoneItem(payload);
+        commit('UPDATE_DONE_LIST', response);
+    },
     EDIT_TODO_ITEM: ({ commit }, payload) => {
         let response = TodoService.editToDoItem(payload);
         window.console.log(response);

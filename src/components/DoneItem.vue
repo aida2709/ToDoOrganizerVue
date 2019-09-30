@@ -31,11 +31,15 @@ export default {
   props: ["item"],
   methods: {
     onDoneItemStatusChanged(item) {
-      this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, item);
-      this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, item);
+      /* this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, item);
+      this.$store.commit(TODO_MODULE + ADD_TO_DO_ITEM, item); */
+
+      this.$store.dispatch('DONE_ITEM_STATUS_CHANGED', item);
     },
     onDeleteDoneItemClicked(item) {
-      this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, item);
+      //this.$store.commit(TODO_MODULE + REMOVE_DONE_ITEM, item);
+
+      this.$store.dispatch('DELETE_DONE_ITEM', item);
     }
   }
 };

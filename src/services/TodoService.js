@@ -82,15 +82,13 @@ export default {
         if (doneList) {
             const index = doneList.findIndex(x => x.Id === doneItem.Id);
 
-            if (index < 0)
-                return false;
-
-            doneList.splice(index, 1);
-            localStorage.setItem('doneList', JSON.stringify(doneList));
-            return true;
+            if (index >= 0){
+                doneList.splice(index, 1);
+                localStorage.setItem('doneList', JSON.stringify(doneList));
+            }
         }
 
-        return false;
+        return doneList;
     },
 
     removeAllDoneItems() {
