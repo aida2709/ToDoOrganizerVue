@@ -34,7 +34,7 @@
 
             <input
               id="newtodo-title"
-              autofocus
+              autofocus="autofocus"
               type="text"
               v-model="newToDo.Title"
               @keyup.enter="addToDo"
@@ -257,6 +257,12 @@ export default {
       this.$nextTick(() => {
         this.delayedDragging = false;
       });
+    }
+  },
+  updated() {
+    const input = document.getElementById("newtodo-title");
+    if (input) {
+      input.focus();
     }
   }
 };

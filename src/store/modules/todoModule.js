@@ -126,7 +126,7 @@ const TodoModule = {
         if (index >= 0) {
           state.todoList.splice(index, 1, editedItem);
           localStorage.setItem('todoList', JSON.stringify(state.todoList));
-         state.todoList=JSON.parse(localStorage.getItem('todoList')); //this 'list force refreshing' is done because of file uploading
+          state.todoList = JSON.parse(localStorage.getItem('todoList')); //this 'list force refreshing' is done because of file uploading
         }
       }
     }
