@@ -170,7 +170,8 @@ export default {
         return this.$store.getters.getTodoList;
       },
       set(value) {
-        this.$store.dispatch("UPDATE_TODO_LIST", value);
+        window.console.log(value);
+        this.$store.dispatch("UPDATE_TODO_LIST_WITH_ARRAY", value);
       }
     },
     doneList: {
@@ -178,7 +179,8 @@ export default {
         return this.$store.getters.getDoneList;
       },
       set(value) {
-        this.$store.dispatch("UPDATE_DONE_LIST", value);
+        window.console.log(value);
+        this.$store.dispatch("UPDATE_DONE_LIST_WITH_ARRAY", value);
       }
     }
   },

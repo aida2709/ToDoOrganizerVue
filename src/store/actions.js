@@ -58,4 +58,14 @@ export default {
         commit('UPDATE_TODO_LIST', todoList);
         commit('UPDATE_DONE_LIST', doneList);
     },
+    UPDATE_TODO_LIST_WITH_ARRAY: ({ commit }, payload) => {
+        let todoList = TodoService.updateTodoList(payload);
+
+        commit('UPDATE_TODO_LIST', todoList);
+    },
+    UPDATE_DONE_LIST_WITH_ARRAY: ({ commit }, payload) => {
+        let doneList = TodoService.updateDoneList(payload);
+
+        commit('UPDATE_DONE_LIST', doneList);
+    },
 }

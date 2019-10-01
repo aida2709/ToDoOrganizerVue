@@ -61,7 +61,7 @@ export default {
         if (todoList) {
             const index = todoList.findIndex(x => x.Id === toDoItem.Id);
 
-            if (index >= 0){
+            if (index >= 0) {
                 todoList.splice(index, 1);
                 localStorage.setItem('todoList', JSON.stringify(todoList));
             }
@@ -212,5 +212,55 @@ export default {
         }
 
         localStorage.setItem('doneList', JSON.stringify(doneList));
+    },
+
+    updateTodoList(todoArray) {
+        let newTodoList = [];
+
+        if (!todoArray) {
+            localStorage.removeItem('doneList');
+        }
+        else {
+            for (let i = 0; i < todoArray.length; i++) {
+                let newItem = {
+                    Id: i + 1,
+                    Title: todoArray[i].Title,
+                    Position: todoArray.length-i,
+                    Image: todoArray[i].Image,
+                    IsFinished: false
+                }
+
+                newTodoList.push(newItem);
+            }
+
+            localStorage.setItem('todoList', JSON.stringify(newTodoList));
+        }
+
+        return newTodoList;
+    },
+
+    updateDoneList(doneArray) {
+        let newDoneList = [];
+
+        if (!doneArray) {
+            localStorage.removeItem('doneList');
+        }
+        else {
+            for (let i = 0; i < doneArray.length; i++) {
+                let newItem = {
+                    Id: i + 1,
+                    Title: doneArray[i].Title,
+                    Position: doneArray.length-i,
+                    Image: doneArray[i].Image,
+                    IsFinished: false
+                }
+
+                newDoneList.push(newItem);
+            }
+
+            localStorage.setItem('doneList', JSON.stringify(newDoneList));
+        }
+
+        return newDoneList;
     }
 }

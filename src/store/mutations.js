@@ -15,5 +15,5 @@ export default {
     },
     UPDATE_TODO_LIST_WITH_IMAGES: (state) => {
         state.todoList = JSON.parse(localStorage.getItem('todoList'));
-    },
+    }
 }
