@@ -47,7 +47,6 @@
             type="file"
             ref="imgUpload"
             accept=".png, .jpg, .jpeg"
-            id="imgupload"
             style="display:none"
             @change="onUploadImageClicked($event)"
           />
@@ -99,9 +98,7 @@ export default {
       selectedItemForImageUpload: null,
       image: "",
       editable: true,
-      isDragging: false,
       drag: false,
-      delayedDragging: false
     };
   },
   methods: {
@@ -183,17 +180,6 @@ export default {
       set(value) {
         this.$store.dispatch("UPDATE_DONE_LIST", value);
       }
-    }
-  },
-  watch: {
-    isDragging(newValue) {
-      if (newValue) {
-        this.delayedDragging = true;
-        return;
-      }
-      this.$nextTick(() => {
-        this.delayedDragging = false;
-      });
     }
   },
   updated() {

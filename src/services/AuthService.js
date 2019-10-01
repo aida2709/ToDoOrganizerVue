@@ -1,7 +1,6 @@
 export default {
-
-    login(Email, password, RememberMe) {
-        if (Email === "test@test.com" && password === "test") {
+    login(Email, Password, RememberMe) {
+        if (Email === "test@test.com" && Password === "test") {
             let user = {
                 Email,
                 Username: "Username",
@@ -45,7 +44,6 @@ export default {
 
     getUsername() {
         let user = JSON.parse(localStorage.getItem('loggedUser'));
-
         return user ? user.Username : '';
     }
 }

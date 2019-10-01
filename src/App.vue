@@ -10,7 +10,10 @@ export default {
   components: {},
   computed: {
     isUserLoggedAndRememberMeActivated() {
-      return this.$store.getters.isLogged && this.$store.getters.isRememberMeActivated;
+      return (
+        this.$store.getters.isLogged &&
+        this.$store.getters.isRememberMeActivated
+      );
     }
   },
   mounted: function() {

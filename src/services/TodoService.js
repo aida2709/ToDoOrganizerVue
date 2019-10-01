@@ -61,12 +61,10 @@ export default {
         if (todoList) {
             const index = todoList.findIndex(x => x.Id === toDoItem.Id);
 
-            if (index < 0)
-                return todoList;
-
-            todoList.splice(index, 1);
-
-            localStorage.setItem('todoList', JSON.stringify(todoList));
+            if (index >= 0){
+                todoList.splice(index, 1);
+                localStorage.setItem('todoList', JSON.stringify(todoList));
+            }
         }
 
         return todoList;
@@ -145,10 +143,10 @@ export default {
         let todoList = JSON.parse(localStorage.getItem('todoList'));
 
         if (todoList) {
-            let i = todoList.findIndex(x => x.Id === editedItem.Id);
+            let index = todoList.findIndex(x => x.Id === editedItem.Id);
 
-            if (i >= 0) {
-                todoList.splice(i, 1, editedItem)
+            if (index >= 0) {
+                todoList.splice(index, 1, editedItem)
                 localStorage.setItem('todoList', JSON.stringify(todoList));
             }
         }
@@ -170,9 +168,9 @@ export default {
             todoList.push(toDoItem);
         }
         else {
-            let i = todoList.findIndex(x => x.Id === toDoItem.Id);
-            if (i > -1) {//if item already exist remove it
-                todoList.splice(i, 1);
+            let foundIndex = todoList.findIndex(x => x.Id === toDoItem.Id);
+            if (foundIndex >= 0) {//if item already exist remove it
+                todoList.splice(foundIndex, 1);
             }
 
             todoList.splice(index, 0, toDoItem);
@@ -200,9 +198,9 @@ export default {
             doneList.push(toDoItem);
         }
         else {
-            let i = doneList.findIndex(x => x.Id === toDoItem.Id);
-            if (i > -1) {//if item already exist remove it
-                doneList.splice(i, 1);
+            let foundIndex = doneList.findIndex(x => x.Id === toDoItem.Id);
+            if (foundIndex >= 0) {//if item already exist remove it
+                doneList.splice(foundIndex, 1);
             }
 
             doneList.splice(index, 0, toDoItem);
